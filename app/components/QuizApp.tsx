@@ -90,7 +90,7 @@ function Navbar({ onRestart, showRestart }: { onRestart: () => void; showRestart
           href="#"
           onClick={(e) => { e.preventDefault(); if (showRestart) onRestart(); }}
         >
-          <Image src="/umdeny-logo-dark.png" alt="Umdeny Holdings" width={160} height={34} style={{ height: '34px', width: 'auto' }} />
+          <Image src="/umdeny-logo-dark.png" alt="Umdeny Capital" width={160} height={34} style={{ height: '34px', width: 'auto' }} />
         </a>
         <div className="navbar-actions">
           <button className="lang-switch" aria-label="Changer de langue">
@@ -168,11 +168,21 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
         {showBanner && (
           <div className="diaspora-banner">
             <IconGlobe className="icon-md shrink-0" />
-            <span>
-              <strong>Vous êtes en dehors du Cameroun ?</strong> Ce quiz est conçu pour vous aussi.
-              Nos recommandations s&apos;adaptent à votre situation géographique.
+            <span className="text-center">
+              Que vous soyez en Afrique ou dans la diaspora. Ce quiz est conçu
+              pour tout le monde.
+              <strong className="ms-1">
+                Nos recommandations s&apos;adaptent à votre situation
+                géographique.
+              </strong>
             </span>
-            <button className="banner-close" onClick={() => setShowBanner(false)} aria-label="Fermer">×</button>
+            <button
+              className="banner-close"
+              onClick={() => setShowBanner(false)}
+              aria-label="Fermer"
+            >
+              ×
+            </button>
           </div>
         )}
         <div className="welcome-content">
@@ -184,18 +194,25 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
             Quel est votre <em>profil patrimonial</em> ?
           </h1>
           <p className="welcome-subtitle">
-            Répondez à 16 questions en 5 minutes et recevez instantanément une analyse personnalisée
-            de votre situation, avec les stratégies et classes d&apos;actifs les mieux adaptées à votre
-            profil — gratuitement, par email.
+            Répondez à 16 questions en 5 minutes et recevez instantanément une
+            analyse personnalisée de votre situation, avec les stratégies et
+            classes d&apos;actifs les mieux adaptées à votre profil —
+            gratuitement, par email.
           </p>
           <button className="btn btn-gold btn-lg welcome-cta" onClick={onStart}>
             <span>Démarrer mon diagnostic gratuit</span>
             <IconArrow className="icon-lg" />
           </button>
           <div className="welcome-reassurance">
-            <span><IconCheck className="icon-xs" /> Gratuit et sans engagement</span>
-            <span><IconCheck className="icon-xs" /> Résultat envoyé par email</span>
-            <span><IconCheck className="icon-xs" /> Données confidentielles</span>
+            <span>
+              <IconCheck className="icon-xs" /> Gratuit et sans engagement
+            </span>
+            <span>
+              <IconCheck className="icon-xs" /> Résultat envoyé par email
+            </span>
+            <span>
+              <IconCheck className="icon-xs" /> Données confidentielles
+            </span>
           </div>
         </div>
         <div className="welcome-meta">
@@ -205,13 +222,15 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
           </div>
           <div className="meta-divider" />
           <div className="meta-item">
-            <div className="meta-num">5<span className="meta-unit">min</span></div>
+            <div className="meta-num">
+              5<span className="meta-unit">min</span>
+            </div>
             <div className="meta-label">Pour compléter</div>
           </div>
           <div className="meta-divider" />
           <div className="meta-item">
-            <div className="meta-num">8</div>
-            <div className="meta-label">Profils possibles</div>
+            <div className="meta-num">1</div>
+            <div className="meta-label">Profil donné</div>
           </div>
         </div>
       </div>
@@ -717,7 +736,7 @@ export default function QuizApp() {
       </main>
       <footer className="app-footer">
         <div className="footer-inner">
-          <span>© 2025 Umdeny Holdings · Yaoundé, Cameroun</span>
+          <span>© 2025 Umdeny Capital</span>
           <span className="footer-sep">·</span>
           <a href="#" onClick={e => e.preventDefault()}>Politique de confidentialité</a>
           <span className="footer-sep">·</span>
