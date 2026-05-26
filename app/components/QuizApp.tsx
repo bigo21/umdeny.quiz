@@ -676,6 +676,7 @@ export default function QuizApp() {
           prenom, nom, email,
           telephone: tel,
           pays,
+          lang,
           consentement_contact: consentContact ?? false,
           consentement_rgpd: consentRGPD ?? false,
           answers: state.answers,

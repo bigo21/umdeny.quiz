@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/app/lib/supabase';
 import { computeResult, type Answers } from '@/app/lib/quizData';
+import { sendProspectEmail, sendTeamEmail } from '@/app/lib/emails';
+import type { Lang } from '@/app/lib/translations';
 
 type SubmitBody = {
   prenom: string;
@@ -8,6 +10,7 @@ type SubmitBody = {
   email: string;
   telephone?: string;
   pays?: string;
+  lang?: Lang;
   consentement_contact: boolean;
   consentement_rgpd: boolean;
   answers: Answers;
@@ -31,13 +34,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const { prenom, nom, email, telephone, pays, consentement_contact, consentement_rgpd, answers } = body;
+  const { prenom, nom, email, telephone, pays, lang = 'fr', consentement_contact, consentement_rgpd, answers } = body;
 
   if (!prenom || !nom || !email || !consentement_contact || !consentement_rgpd) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
   const { profil, secondaire, scores } = computeResult(answers);
+  const createdAt = new Date().toISOString();
 
   const record = {
     prenom,
@@ -69,12 +73,35 @@ export async function POST(req: NextRequest) {
     reponses_completes_json: answers,
   };
 
-  const { error } = await supabase.from('prospects').insert(record);
+  const { data: inserted, error: dbError } = await supabase
+    .from('prospects')
+    .insert(record)
+    .select('prospect_id')
+    .single();
 
-  if (error) {
-    console.error('[submit] Supabase error:', error);
+  if (dbError) {
+    console.error('[submit] Supabase error:', dbError);
     return NextResponse.json({ error: 'Database error' }, { status: 500 });
   }
+
+  const prospectId: string = inserted.prospect_id;
+
+  // Send emails in parallel, don't fail the request if emails fail
+  const [prospectResult, teamResult] = await Promise.allSettled([
+    sendProspectEmail({ prenom, email, lang, profil, answers }),
+    sendTeamEmail({ prenom, nom, email, telephone, pays, profil, secondaire, answers, createdAt }),
+  ]);
+
+  const emailProspectOk = prospectResult.status === 'fulfilled' && !prospectResult.value.error;
+  const emailTeamOk = teamResult.status === 'fulfilled' && !teamResult.value.error;
+
+  if (!emailProspectOk) console.error('[submit] Prospect email error:', prospectResult);
+  if (!emailTeamOk) console.error('[submit] Team email error:', teamResult);
+
+  await supabase
+    .from('prospects')
+    .update({ email_prospect_envoye: emailProspectOk, email_equipe_envoye: emailTeamOk })
+    .eq('prospect_id', prospectId);
 
   return NextResponse.json({ profil, secondaire });
 }
