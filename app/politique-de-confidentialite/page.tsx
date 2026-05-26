@@ -142,7 +142,7 @@ export default function PolitiqueDeConfidentialite() {
 
       {/* Footer */}
       <footer style={{ borderTop: '1px solid #e5e5e5', padding: '24px', textAlign: 'center', fontSize: '12px', color: '#aaa' }}>
-        © 2025 Umdeny Holdings · Yaoundé, Cameroon · <a href="mailto:direction@umdeny.com" style={{ color: '#aaa' }}>direction@umdeny.com</a>
+        © 2025 Umdeny Holdings · <a href="mailto:direction@umdeny.com" style={{ color: '#aaa' }}>direction@umdeny.com</a>
       </footer>
     </div>
   );
