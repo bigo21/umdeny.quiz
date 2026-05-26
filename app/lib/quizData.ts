@@ -42,13 +42,13 @@ export const QUIZ_QUESTIONS: Question[] = [
   {
     id: 'Q1', block: 'A', question: "Où résidez-vous actuellement ?",
     options: [
-      { tag: 'GEO_CMR_YDE', label: "Au Cameroun — Yaoundé" },
-      { tag: 'GEO_CMR_DLA', label: "Au Cameroun — Douala" },
-      { tag: 'GEO_CMR_OTHER', label: "Au Cameroun — autre ville" },
-      { tag: 'GEO_AFRIQUE', label: "En Afrique hors Cameroun" },
-      { tag: 'GEO_EUROPE', label: "En Europe" },
-      { tag: 'GEO_AMERIQUE', label: "En Amérique du Nord ou du Sud" },
-      { tag: 'GEO_AUTRE', label: "Autre" },
+      { tag: 'GEO_CMR', label: "Au Cameroun" },
+      { tag: 'GEO_AFRIQUE_C', label: "Afrique centrale" },
+      { tag: 'GEO_AFRIQUE_O', label: "Afrique de l'Ouest" },
+      { tag: 'GEO_AFRIQUE_AUTRE', label: "Autre Afrique" },
+      { tag: 'GEO_EUROPE', label: "Europe" },
+      { tag: 'GEO_AMERIQUE', label: "Amérique" },
+      { tag: 'GEO_AUTRE', label: "Autres" },
     ],
   },
   {
