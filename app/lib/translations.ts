@@ -108,7 +108,7 @@ export const ui = {
       restart: "← Refaire le quiz depuis le début",
     },
     footer: {
-      copy: "© 2025 Umdeny Holdings",
+      copy: "© 2025 Umdeny Capital",
       privacy: "Politique de confidentialité",
     },
   },
@@ -214,7 +214,7 @@ export const ui = {
       restart: "← Retake the quiz from the start",
     },
     footer: {
-      copy: "© 2025 Umdeny Holdings",
+      copy: "© 2025 Umdeny Capital",
       privacy: "Privacy policy",
     },
   },
@@ -613,7 +613,7 @@ const questionsData: Record<Lang, Question[]> = {
     },
     {
       id: 'Q16', block: 'E',
-      question: 'What is holding you back most in your investment journey today?',
+      question: 'What is Capital you back most in your investment journey today?',
       options: [
         { tag: 'FREIN_SAVOIR', label: 'I lack information and education on the subject' },
         { tag: 'FREIN_CAPITAL', label: "I don't yet have the capital needed to start" },
@@ -668,7 +668,7 @@ const profilesData: Record<Lang, Record<string, Profile>> = {
       description: "Vous avez reçu ou vous anticipez un héritage, et vous vous posez les bonnes questions : comment le préserver, comment le faire fructifier, et comment le transmettre à votre tour ? L'héritage est une responsabilité autant qu'une opportunité.",
       assets: [
         { name: 'Audit & valorisation du patrimoine', desc: 'Évaluation et cartographie complète des actifs reçus avant toute décision.', risk: '—', horizon: '1-3 mois', ticket: 'Service' },
-        { name: 'Structuration juridique (Holding, SCI)', desc: 'Protection et optimisation fiscale du patrimoine hérité.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
+        { name: 'Structuration juridique (Capital, SCI)', desc: 'Protection et optimisation fiscale du patrimoine hérité.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
         { name: 'Diversification résiliente', desc: 'Combinaison immobilier, marchés et liquidités pour limiter la concentration.', risk: 'Modéré', horizon: '5-10 ans', ticket: 'Selon patrimoine' },
         { name: 'Stratégie de transmission planifiée', desc: 'Donations progressives, assurance-vie, testament — anticiper la suite.', risk: 'Faible', horizon: 'Long terme', ticket: 'Variable' },
       ],
@@ -714,7 +714,7 @@ const profilesData: Record<Lang, Record<string, Profile>> = {
       description: "Vous avez une entreprise, une activité libérale, ou plusieurs sources de revenus. Votre patrimoine est souvent concentré dans votre activité — et c'est un risque en soi. Les entrepreneurs ont des besoins patrimoniaux spécifiques : diversification, protection, optimisation fiscale, et préparation de la sortie.",
       assets: [
         { name: 'Diversification hors activité', desc: 'Immobilier, marchés financiers, obligations. Indépendant de votre entreprise.', risk: 'Modéré', horizon: '5-10 ans', ticket: 'Variable' },
-        { name: 'Structuration juridique', desc: 'Holding patrimoniale, SCI, séparation pro / perso. Levier fiscal majeur.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
+        { name: 'Structuration juridique', desc: 'Capital patrimoniale, SCI, séparation pro / perso. Levier fiscal majeur.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
         { name: 'Préparation de la sortie / transmission', desc: 'Valorisation des parts, cession, transmission familiale, IPO.', risk: '—', horizon: '3-10 ans', ticket: 'Conseil' },
         { name: 'Actifs financiers liquides', desc: "Liquidité immédiate pour saisir des opportunités ou faire face aux imprévus.", risk: 'Modéré', horizon: 'Flexible', ticket: 'Variable' },
       ],
@@ -758,7 +758,7 @@ const profilesData: Record<Lang, Record<string, Profile>> = {
       description: "You've received or anticipate an inheritance, and you're asking the right questions: how to preserve it, grow it, and pass it on in turn? Inheritance is a responsibility as much as an opportunity.",
       assets: [
         { name: 'Audit & asset valuation', desc: 'Complete evaluation and mapping of received assets before any decision.', risk: '—', horizon: '1–3 months', ticket: 'Service' },
-        { name: 'Legal structuring (Holding, SCI)', desc: 'Protection and tax optimisation of inherited wealth.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
+        { name: 'Legal structuring (Capital, SCI)', desc: 'Protection and tax optimisation of inherited wealth.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
         { name: 'Resilient diversification', desc: 'Combination of real estate, markets and liquidity to limit concentration.', risk: 'Moderate', horizon: '5–10 years', ticket: 'Based on wealth' },
         { name: 'Planned transmission strategy', desc: 'Progressive donations, life insurance, will — planning ahead.', risk: 'Low', horizon: 'Long term', ticket: 'Variable' },
       ],
@@ -804,7 +804,7 @@ const profilesData: Record<Lang, Record<string, Profile>> = {
       description: "You have a company, a liberal profession, or multiple income streams. Your wealth is often concentrated in your business — and that's a risk in itself. Entrepreneurs have specific wealth needs: diversification, protection, tax optimisation, and exit planning.",
       assets: [
         { name: 'Diversification outside your business', desc: 'Real estate, financial markets, bonds. Independent of your company.', risk: 'Moderate', horizon: '5–10 years', ticket: 'Variable' },
-        { name: 'Legal structuring', desc: 'Holding company, SCI, personal/professional separation. Major tax lever.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
+        { name: 'Legal structuring', desc: 'Capital company, SCI, personal/professional separation. Major tax lever.', risk: '—', horizon: 'Permanent', ticket: 'Variable' },
         { name: 'Exit / succession planning', desc: 'Share valuation, sale, family succession, IPO.', risk: '—', horizon: '3–10 years', ticket: 'Advisory' },
         { name: 'Liquid financial assets', desc: 'Immediate liquidity to seize opportunities or handle the unexpected.', risk: 'Moderate', horizon: 'Flexible', ticket: 'Variable' },
       ],

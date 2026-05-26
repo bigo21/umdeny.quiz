@@ -14,7 +14,7 @@ const sections = [
     title: 'Identification du responsable de traitement',
     content: (
       <>
-        <p>Umdeny Capital, entité du groupe Umdeny Holding, société de droit camerounais immatriculée au RCCM de Yaoundé.</p>
+        <p>Umdeny Capital, entité du groupe Umdeny Capital, société de droit camerounais immatriculée au RCCM de Yaoundé.</p>
         <p>Contact : <a href="mailto:direction@umdeny.com" style={{ color: GOLD }}>direction@umdeny.com</a></p>
       </>
     ),
@@ -142,7 +142,7 @@ export default function PolitiqueDeConfidentialite() {
 
       {/* Footer */}
       <footer style={{ borderTop: '1px solid #e5e5e5', padding: '24px', textAlign: 'center', fontSize: '12px', color: '#aaa' }}>
-        © 2025 Umdeny Holdings · <a href="mailto:direction@umdeny.com" style={{ color: '#aaa' }}>direction@umdeny.com</a>
+        © 2025 Umdeny Capital · <a href="mailto:direction@umdeny.com" style={{ color: '#aaa' }}>direction@umdeny.com</a>
       </footer>
     </div>
   );

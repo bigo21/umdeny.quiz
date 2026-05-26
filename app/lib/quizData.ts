@@ -268,7 +268,7 @@ export const QUIZ_PROFILES: Record<string, Profile> = {
     description: "Vous avez reçu ou vous anticipez un héritage, et vous vous posez les bonnes questions : comment le préserver, comment le faire fructifier, et comment le transmettre à votre tour ? L'héritage est une responsabilité autant qu'une opportunité.",
     assets: [
       { name: "Audit & valorisation du patrimoine", desc: "Évaluation et cartographie complète des actifs reçus avant toute décision.", risk: "—", horizon: "1-3 mois", ticket: "Service" },
-      { name: "Structuration juridique (Holding, SCI)", desc: "Protection et optimisation fiscale du patrimoine hérité.", risk: "—", horizon: "Permanent", ticket: "Variable" },
+      { name: "Structuration juridique (Capital, SCI)", desc: "Protection et optimisation fiscale du patrimoine hérité.", risk: "—", horizon: "Permanent", ticket: "Variable" },
       { name: "Diversification résiliente", desc: "Combinaison immobilier, marchés et liquidités pour limiter la concentration.", risk: "Modéré", horizon: "5-10 ans", ticket: "Selon patrimoine" },
       { name: "Stratégie de transmission planifiée", desc: "Donations progressives, assurance-vie, testament — anticiper la suite.", risk: "Faible", horizon: "Long terme", ticket: "Variable" },
     ],
@@ -314,7 +314,7 @@ export const QUIZ_PROFILES: Record<string, Profile> = {
     description: "Vous avez une entreprise, une activité libérale, ou plusieurs sources de revenus. Votre patrimoine est souvent concentré dans votre activité — et c'est un risque en soi. Les entrepreneurs ont des besoins patrimoniaux spécifiques : diversification, protection, optimisation fiscale, et préparation de la sortie.",
     assets: [
       { name: "Diversification hors activité", desc: "Immobilier, marchés financiers, obligations. Indépendant de votre entreprise.", risk: "Modéré", horizon: "5-10 ans", ticket: "Variable" },
-      { name: "Structuration juridique", desc: "Holding patrimoniale, SCI, séparation pro / perso. Levier fiscal majeur.", risk: "—", horizon: "Permanent", ticket: "Variable" },
+      { name: "Structuration juridique", desc: "Capital patrimoniale, SCI, séparation pro / perso. Levier fiscal majeur.", risk: "—", horizon: "Permanent", ticket: "Variable" },
       { name: "Préparation de la sortie / transmission", desc: "Valorisation des parts, cession, transmission familiale, IPO.", risk: "—", horizon: "3-10 ans", ticket: "Conseil" },
       { name: "Actifs financiers liquides", desc: "Liquidité immédiate pour saisir des opportunités ou faire face aux imprévus.", risk: "Modéré", horizon: "Flexible", ticket: "Variable" },
     ],
