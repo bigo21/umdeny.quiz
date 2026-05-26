@@ -24,7 +24,7 @@ export const ui = {
       r3: "Données confidentielles",
       meta1Label: "Questions ciblées",
       meta2Label: "Pour compléter",
-      meta3Label: "Profil donné",
+      meta3Label: "Confidentiel",
     },
     quiz: {
       back: "Précédent",
@@ -131,7 +131,7 @@ export const ui = {
       r3: "Confidential data",
       meta1Label: "Targeted questions",
       meta2Label: "To complete",
-      meta3Label: "Given profile",
+      meta3Label: "Confidential",
     },
     quiz: {
       back: "Previous",

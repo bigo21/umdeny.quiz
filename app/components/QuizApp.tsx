@@ -234,7 +234,7 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
           </div>
           <div className="meta-divider" />
           <div className="meta-item">
-            <div className="meta-num">1</div>
+            <div className="meta-num">100<span className="meta-unit">%</span></div>
             <div className="meta-label">{w.meta3Label}</div>
           </div>
         </div>
