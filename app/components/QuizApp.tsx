@@ -180,8 +180,17 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
         {showBanner && (
           <div className="diaspora-banner">
             <IconGlobe className="icon-md shrink-0" />
-            <span>{w.bannerText}</span>
-            <button className="banner-close" onClick={() => setShowBanner(false)} aria-label="Close">×</button>
+            <span className="text-center">
+              {w.bannerText}
+              <strong className="ms-1">{w.bannerTextStrong}</strong>
+            </span>
+            <button
+              className="banner-close"
+              onClick={() => setShowBanner(false)}
+              aria-label="Close"
+            >
+              ×
+            </button>
           </div>
         )}
         <div className="welcome-content">
@@ -190,7 +199,8 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
             {w.eyebrow}
           </div>
           <h1 className="welcome-title">
-            {w.titlePlain} <em>{w.titleEm}</em>{w.titleEnd}
+            {w.titlePlain} <em className="pe-3">{w.titleEm}</em>
+            {w.titleEnd}
           </h1>
           <p className="welcome-subtitle">{w.subtitle}</p>
           <button className="btn btn-gold btn-lg welcome-cta" onClick={onStart}>
@@ -198,9 +208,15 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
             <IconArrow className="icon-lg" />
           </button>
           <div className="welcome-reassurance">
-            <span><IconCheck className="icon-xs" /> {w.r1}</span>
-            <span><IconCheck className="icon-xs" /> {w.r2}</span>
-            <span><IconCheck className="icon-xs" /> {w.r3}</span>
+            <span>
+              <IconCheck className="icon-xs" /> {w.r1}
+            </span>
+            <span>
+              <IconCheck className="icon-xs" /> {w.r2}
+            </span>
+            <span>
+              <IconCheck className="icon-xs" /> {w.r3}
+            </span>
           </div>
         </div>
         <div className="welcome-meta">
@@ -210,12 +226,14 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
           </div>
           <div className="meta-divider" />
           <div className="meta-item">
-            <div className="meta-num">5<span className="meta-unit">min</span></div>
+            <div className="meta-num">
+              5<span className="meta-unit">min</span>
+            </div>
             <div className="meta-label">{w.meta2Label}</div>
           </div>
           <div className="meta-divider" />
           <div className="meta-item">
-            <div className="meta-num">8</div>
+            <div className="meta-num">1</div>
             <div className="meta-label">{w.meta3Label}</div>
           </div>
         </div>
