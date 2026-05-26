@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Roboto_Condensed, Fraunces } from "next/font/google";
 import "./globals.css";
+import CookieBanner from "@/app/components/CookieBanner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -38,7 +39,10 @@ export default function RootLayout({
       lang="fr"
       className={`${poppins.variable} ${robotoCondensed.variable} ${fraunces.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }

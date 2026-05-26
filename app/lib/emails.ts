@@ -43,7 +43,7 @@ function layout(body: string): string {
     `<p style="margin:0;font-size:11px;color:#888;text-align:center;line-height:1.6;">` +
     `Umdeny Holdings &middot; Yaound&eacute;, Cameroon &middot; <a href="mailto:direction@umdeny.com" style="color:#888;">direction@umdeny.com</a><br>` +
     `Vous recevez cet email car vous avez compl&eacute;t&eacute; le quiz patrimonial Umdeny Capital.<br>` +
-    `Vos donn&eacute;es sont trait&eacute;es conform&eacute;ment &agrave; notre politique de confidentialit&eacute;.` +
+    `<a href="https://quiz.umdeny.com/politique-de-confidentialite" style="color:#C9A84C;">Politique de confidentialit&eacute;</a>` +
     `</p></td></tr>` +
     `</table></td></tr></table></body></html>`
   );

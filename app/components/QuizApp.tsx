@@ -2,6 +2,7 @@
 
 import { useState, useEffect, createContext, useContext } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { computeProfile, type Answers } from '@/app/lib/quizData';
 import {
   ui, getBlocks, getQuestions, getProfiles,
@@ -432,7 +433,7 @@ function CaptureScreen({ form, setForm, onSubmit, onBack, submitting }: {
               <input type="checkbox" checked={!!form.consentRGPD} onChange={e => update('consentRGPD', e.target.checked)} />
               <span>
                 {c.consentRgpd}{' '}
-                <a href="#" onClick={e => e.preventDefault()}>{c.privacyLink}</a>
+                <Link href="/politique-de-confidentialite" target="_blank" rel="noopener noreferrer">{c.privacyLink}</Link>
                 {' '}{c.consentRgpdEnd}
               </span>
             </label>
@@ -733,7 +734,7 @@ export default function QuizApp() {
           <div className="footer-inner">
             <span>{t.footer.copy}</span>
             <span className="footer-sep">·</span>
-            <a href="#" onClick={e => e.preventDefault()}>{t.footer.privacy}</a>
+            <Link href="/politique-de-confidentialite">{t.footer.privacy}</Link>
             <span className="footer-sep">·</span>
             <a href="mailto:direction@umdeny.com">direction@umdeny.com</a>
           </div>
