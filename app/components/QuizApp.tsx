@@ -1,12 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import Image from 'next/image';
+import { computeProfile, type Answers } from '@/app/lib/quizData';
 import {
-  QUIZ_BLOCKS, QUIZ_QUESTIONS, QUIZ_PROFILES,
-  computeProfile,
-  type Answers,
-} from '@/app/lib/quizData';
+  ui, getBlocks, getQuestions, getProfiles,
+  type Lang,
+} from '@/app/lib/translations';
+
+// ─── Language context ─────────────────────────────────────────────────────────
+
+type LangCtx = { lang: Lang; setLang: (l: Lang) => void };
+const LangContext = createContext<LangCtx>({ lang: 'fr', setLang: () => {} });
+const useLang = () => useContext(LangContext);
+const useT = () => ui[useLang().lang];
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
 
@@ -82,25 +89,27 @@ function NavyOrnament({ side, opacity = 0.05 }: { side: 'right' | 'left-bottom' 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 
 function Navbar({ onRestart, showRestart }: { onRestart: () => void; showRestart: boolean }) {
+  const { lang, setLang } = useLang();
+  const t = useT();
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        <a
-          className="navbar-brand"
-          href="#"
-          onClick={(e) => { e.preventDefault(); if (showRestart) onRestart(); }}
-        >
+        <a className="navbar-brand" href="#" onClick={(e) => { e.preventDefault(); if (showRestart) onRestart(); }}>
           <Image src="/umdeny-logo-dark.png" alt="Umdeny Capital" width={160} height={34} style={{ height: '34px', width: 'auto' }} />
         </a>
         <div className="navbar-actions">
-          <button className="lang-switch" aria-label="Changer de langue">
-            <span className="lang-active">FR</span>
+          <button
+            className="lang-switch"
+            aria-label="Switch language"
+            onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
+          >
+            <span className={lang === 'fr' ? 'lang-active' : 'lang-inactive'}>FR</span>
             <span className="lang-sep">·</span>
-            <span className="lang-inactive">EN</span>
+            <span className={lang === 'en' ? 'lang-active' : 'lang-inactive'}>EN</span>
           </button>
           <a className="btn btn-gold btn-sm" href="https://cal.com/vireel/umdeny-capital" target="_blank" rel="noopener noreferrer">
             <IconCalendar className="icon-sm" />
-            <span>Prendre RDV</span>
+            <span>{t.nav.rdv}</span>
           </a>
         </div>
       </div>
@@ -111,16 +120,19 @@ function Navbar({ onRestart, showRestart }: { onRestart: () => void; showRestart
 // ─── Progress Bar ─────────────────────────────────────────────────────────────
 
 function ProgressBar({ currentIndex }: { currentIndex: number }) {
+  const { lang } = useLang();
+  const blocks = getBlocks(lang);
+  const questions = getQuestions(lang);
   let cumulative = 0;
   return (
     <div className="progress-track">
-      {QUIZ_BLOCKS.map((block) => {
-        const qsInBlock = QUIZ_QUESTIONS.filter(q => q.block === block.id);
+      {blocks.map((block) => {
+        const count = questions.filter(q => q.block === block.id).length;
         const start = cumulative;
-        const end = cumulative + qsInBlock.length;
+        const end = cumulative + count;
         cumulative = end;
-        const filled = Math.min(Math.max(currentIndex + 1 - start, 0), qsInBlock.length);
-        const pct = (filled / qsInBlock.length) * 100;
+        const filled = Math.min(Math.max(currentIndex + 1 - start, 0), count);
+        const pct = (filled / count) * 100;
         const active = currentIndex + 1 > start && currentIndex < end;
         return (
           <div key={block.id} className={`progress-segment${active ? ' active' : ''}`}>
@@ -136,9 +148,7 @@ function ProgressBar({ currentIndex }: { currentIndex: number }) {
 
 // ─── Option Card ──────────────────────────────────────────────────────────────
 
-function OptionCard({
-  label, selected, onClick, multi, index,
-}: {
+function OptionCard({ label, selected, onClick, multi, index }: {
   label: string; selected: boolean; onClick: () => void; multi: boolean; index: number;
 }) {
   return (
@@ -160,6 +170,8 @@ function OptionCard({
 
 function WelcomeScreen({ onStart }: { onStart: () => void }) {
   const [showBanner, setShowBanner] = useState(true);
+  const t = useT();
+  const w = t.welcome;
   return (
     <div className="welcome-screen">
       <NavyOrnament side="right" opacity={0.06} />
@@ -168,69 +180,43 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
         {showBanner && (
           <div className="diaspora-banner">
             <IconGlobe className="icon-md shrink-0" />
-            <span className="text-center">
-              Que vous soyez en Afrique ou dans la diaspora. Ce quiz est conçu
-              pour tout le monde.
-              <strong className="ms-1">
-                Nos recommandations s&apos;adaptent à votre situation
-                géographique.
-              </strong>
-            </span>
-            <button
-              className="banner-close"
-              onClick={() => setShowBanner(false)}
-              aria-label="Fermer"
-            >
-              ×
-            </button>
+            <span>{w.bannerText}</span>
+            <button className="banner-close" onClick={() => setShowBanner(false)} aria-label="Close">×</button>
           </div>
         )}
         <div className="welcome-content">
           <div className="welcome-eyebrow">
             <span className="welcome-pip" />
-            DIAGNOSTIC PATRIMONIAL · 5 MINUTES
+            {w.eyebrow}
           </div>
           <h1 className="welcome-title">
-            Quel est votre <em>profil patrimonial</em> ?
+            {w.titlePlain} <em>{w.titleEm}</em>{w.titleEnd}
           </h1>
-          <p className="welcome-subtitle">
-            Répondez à 16 questions en 5 minutes et recevez instantanément une
-            analyse personnalisée de votre situation, avec les stratégies et
-            classes d&apos;actifs les mieux adaptées à votre profil —
-            gratuitement, par email.
-          </p>
+          <p className="welcome-subtitle">{w.subtitle}</p>
           <button className="btn btn-gold btn-lg welcome-cta" onClick={onStart}>
-            <span>Démarrer mon diagnostic gratuit</span>
+            <span>{w.cta}</span>
             <IconArrow className="icon-lg" />
           </button>
           <div className="welcome-reassurance">
-            <span>
-              <IconCheck className="icon-xs" /> Gratuit et sans engagement
-            </span>
-            <span>
-              <IconCheck className="icon-xs" /> Résultat envoyé par email
-            </span>
-            <span>
-              <IconCheck className="icon-xs" /> Données confidentielles
-            </span>
+            <span><IconCheck className="icon-xs" /> {w.r1}</span>
+            <span><IconCheck className="icon-xs" /> {w.r2}</span>
+            <span><IconCheck className="icon-xs" /> {w.r3}</span>
           </div>
         </div>
         <div className="welcome-meta">
           <div className="meta-item">
             <div className="meta-num">16</div>
-            <div className="meta-label">Questions ciblées</div>
+            <div className="meta-label">{w.meta1Label}</div>
           </div>
           <div className="meta-divider" />
           <div className="meta-item">
-            <div className="meta-num">
-              5<span className="meta-unit">min</span>
-            </div>
-            <div className="meta-label">Pour compléter</div>
+            <div className="meta-num">5<span className="meta-unit">min</span></div>
+            <div className="meta-label">{w.meta2Label}</div>
           </div>
           <div className="meta-divider" />
           <div className="meta-item">
-            <div className="meta-num">1</div>
-            <div className="meta-label">Profil donné</div>
+            <div className="meta-num">8</div>
+            <div className="meta-label">{w.meta3Label}</div>
           </div>
         </div>
       </div>
@@ -240,9 +226,7 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
 
 // ─── Question Screen ──────────────────────────────────────────────────────────
 
-function QuestionScreen({
-  index, answers, setAnswer, onNext, onBack, transitionKey,
-}: {
+function QuestionScreen({ index, answers, setAnswer, onNext, onBack, transitionKey }: {
   index: number;
   answers: Answers;
   setAnswer: (id: string, value: string | string[]) => void;
@@ -250,8 +234,12 @@ function QuestionScreen({
   onBack: () => void;
   transitionKey: number;
 }) {
-  const q = QUIZ_QUESTIONS[index];
-  const block = QUIZ_BLOCKS.find(b => b.id === q.block)!;
+  const { lang } = useLang();
+  const t = useT();
+  const questions = getQuestions(lang);
+  const blocks = getBlocks(lang);
+  const q = questions[index];
+  const block = blocks.find(b => b.id === q.block)!;
   const value = answers[q.id];
   const multi = !!q.multi;
 
@@ -267,10 +255,9 @@ function QuestionScreen({
     }
   };
 
-  const isSelected = (tag: string) => {
-    if (multi) return Array.isArray(value) && value.includes(tag);
-    return value === tag;
-  };
+  const isSelected = (tag: string) => multi
+    ? Array.isArray(value) && value.includes(tag)
+    : value === tag;
 
   const canContinue = multi ? Array.isArray(value) && value.length > 0 : !!value;
   const multiCount = multi && Array.isArray(value) ? value.length : 0;
@@ -280,16 +267,16 @@ function QuestionScreen({
       <div className="question-topbar">
         <button className="quiz-back" onClick={onBack} disabled={index === 0}>
           <IconBack className="icon-sm" />
-          <span>Précédent</span>
+          <span>{t.quiz.back}</span>
         </button>
         <div className="block-tag">
-          <span className="block-id">Bloc {q.block}</span>
+          <span className="block-id">{t.quiz.bloc} {q.block}</span>
           <span className="block-title">{block.subtitle}</span>
         </div>
         <div className="question-counter">
           <span className="counter-current">{String(index + 1).padStart(2, '0')}</span>
           <span className="counter-sep">/</span>
-          <span className="counter-total">{QUIZ_QUESTIONS.length}</span>
+          <span className="counter-total">{questions.length}</span>
         </div>
       </div>
 
@@ -297,11 +284,11 @@ function QuestionScreen({
 
       <div className="question-body" key={transitionKey}>
         <div className="question-meta">
-          <span className="question-meta-id">QUESTION {index + 1} / {QUIZ_QUESTIONS.length}</span>
+          <span className="question-meta-id">{t.quiz.questionOf(index + 1, questions.length)}</span>
           {multi && (
             <span className="question-meta-multi">
               <IconSparkle className="icon-xs" />
-              {q.hint ?? "Choix multiples"} · {multiCount}/{q.max ?? 3}
+              {q.hint ?? t.quiz.multiHint} · {multiCount}/{q.max ?? 3}
             </span>
           )}
         </div>
@@ -326,7 +313,7 @@ function QuestionScreen({
           onClick={() => canContinue && onNext()}
           disabled={!canContinue}
         >
-          <span>{index === QUIZ_QUESTIONS.length - 1 ? "Voir mon profil" : "Question suivante"}</span>
+          <span>{index === questions.length - 1 ? t.quiz.seeProfile : t.quiz.next}</span>
           <IconArrow className="icon-md" />
         </button>
       </div>
@@ -342,9 +329,7 @@ type FormData = {
   consentContact?: boolean; consentRGPD?: boolean;
 };
 
-function Field({
-  label, required, type = 'text', value, onChange, placeholder, hint,
-}: {
+function Field({ label, required, type = 'text', value, onChange, placeholder, hint }: {
   label: string; required?: boolean; type?: string;
   value: string; onChange: (v: string) => void;
   placeholder?: string; hint?: string;
@@ -367,14 +352,14 @@ function Field({
   );
 }
 
-function CaptureScreen({
-  form, setForm, onSubmit, onBack,
-}: {
+function CaptureScreen({ form, setForm, onSubmit, onBack }: {
   form: FormData;
   setForm: (f: FormData) => void;
   onSubmit: () => void;
   onBack: () => void;
 }) {
+  const t = useT();
+  const c = t.capture;
   const update = (k: keyof FormData, v: string | boolean) => setForm({ ...form, [k]: v });
   const valid =
     form.prenom?.trim() &&
@@ -383,78 +368,59 @@ function CaptureScreen({
     form.consentContact &&
     form.consentRGPD;
 
-  const countries = [
-    "Cameroun", "Côte d'Ivoire", "Sénégal", "France", "Belgique", "Canada",
-    "États-Unis", "Royaume-Uni", "Allemagne", "Maroc", "Gabon", "RDC", "Autre",
-  ];
-
   return (
     <div className="capture-screen">
       <NavyOrnament side="right" opacity={0.08} />
       <div className="capture-inner">
         <button className="quiz-back capture-back" onClick={onBack}>
           <IconBack className="icon-sm" />
-          <span>Modifier mes réponses</span>
+          <span>{c.back}</span>
         </button>
         <div className="capture-eyebrow">
           <IconSparkle className="icon-sm" />
-          DERNIÈRE ÉTAPE
+          {c.eyebrow}
         </div>
         <h2 className="capture-title">
-          Votre profil est prêt.<br />
-          <em>Entrez vos coordonnées pour le recevoir.</em>
+          {c.title}<br />
+          <em>{c.titleEm}</em>
         </h2>
         <p className="capture-subtitle">
-          Votre résultat détaillé vous sera envoyé gratuitement par email.<br />
-          Nous ne partageons jamais vos données.
+          {c.subtitle.split('\n').map((line, i) => (
+            <span key={i}>{line}{i === 0 && <br />}</span>
+          ))}
         </p>
 
-        <form
-          className="capture-form"
-          onSubmit={(e) => { e.preventDefault(); if (valid) onSubmit(); }}
-        >
+        <form className="capture-form" onSubmit={(e) => { e.preventDefault(); if (valid) onSubmit(); }}>
           <div className="form-row form-row-2">
-            <Field label="Prénom" required value={form.prenom ?? ''} onChange={v => update('prenom', v)} placeholder="ex. Aïssatou" />
-            <Field label="Nom" required value={form.nom ?? ''} onChange={v => update('nom', v)} placeholder="ex. Mbengue" />
+            <Field label={c.firstName} required value={form.prenom ?? ''} onChange={v => update('prenom', v)} placeholder={c.placeholderFirstName} />
+            <Field label={c.lastName} required value={form.nom ?? ''} onChange={v => update('nom', v)} placeholder={c.placeholderLastName} />
           </div>
-          <Field label="Email" required type="email" value={form.email ?? ''} onChange={v => update('email', v)} placeholder="vous@exemple.com" />
-          <Field label="Téléphone / WhatsApp" hint="Pour être recontacté plus facilement" value={form.tel ?? ''} onChange={v => update('tel', v)} placeholder="+237 6XX XX XX XX" />
+          <Field label={c.email} required type="email" value={form.email ?? ''} onChange={v => update('email', v)} placeholder={c.placeholderEmail} />
+          <Field label={c.phone} hint={c.phoneHint} value={form.tel ?? ''} onChange={v => update('tel', v)} placeholder={c.placeholderPhone} />
           <div className="form-field">
-            <label className="form-label">Pays de résidence</label>
-            <select className="form-select" value={form.pays ?? 'Cameroun'} onChange={e => update('pays', e.target.value)}>
-              {countries.map(c => <option key={c}>{c}</option>)}
+            <label className="form-label">{c.country}</label>
+            <select className="form-select" value={form.pays ?? c.countries[0]} onChange={e => update('pays', e.target.value)}>
+              {c.countries.map(country => <option key={country}>{country}</option>)}
             </select>
           </div>
 
           <div className="consent-block">
             <label className="consent-row">
-              <input
-                type="checkbox"
-                checked={!!form.consentContact}
-                onChange={e => update('consentContact', e.target.checked)}
-              />
-              <span>J&apos;accepte d&apos;être recontacté par l&apos;équipe Umdeny Capital pour un accompagnement personnalisé.</span>
+              <input type="checkbox" checked={!!form.consentContact} onChange={e => update('consentContact', e.target.checked)} />
+              <span>{c.consentContact}</span>
             </label>
             <label className="consent-row">
-              <input
-                type="checkbox"
-                checked={!!form.consentRGPD}
-                onChange={e => update('consentRGPD', e.target.checked)}
-              />
+              <input type="checkbox" checked={!!form.consentRGPD} onChange={e => update('consentRGPD', e.target.checked)} />
               <span>
-                J&apos;accepte la{' '}
-                <a href="#" onClick={e => e.preventDefault()}>politique de confidentialité</a>
-                {' '}d&apos;Umdeny Capital.
+                {c.consentRgpd}{' '}
+                <a href="#" onClick={e => e.preventDefault()}>{c.privacyLink}</a>
+                {' '}{c.consentRgpdEnd}
               </span>
             </label>
           </div>
 
-          <button
-            type="submit"
-            className={`btn btn-gold btn-lg capture-submit${valid ? '' : ' disabled'}`}
-            disabled={!valid}
-          >
-            <span>Voir mon profil patrimonial</span>
+          <button type="submit" className={`btn btn-gold btn-lg capture-submit${valid ? '' : ' disabled'}`} disabled={!valid}>
+            <span>{c.submit}</span>
             <IconArrow className="icon-md" />
           </button>
         </form>
@@ -467,30 +433,33 @@ function CaptureScreen({
 
 function riskClass(risk: string): string {
   const s = (risk ?? '').toLowerCase();
-  if (s.includes('faible')) return 'risk-low';
-  if (s.includes('modéré')) return 'risk-mid';
-  if (s.includes('élevé')) return 'risk-high';
+  if (s === 'faible' || s === 'low') return 'risk-low';
+  if (s === 'modéré' || s === 'moderate') return 'risk-mid';
+  if (s === 'élevé' || s === 'high') return 'risk-high';
   return 'risk-none';
 }
 
-function ResultScreen({
-  profileId, answers, form, onRestart,
-}: {
+function ResultScreen({ profileId, answers, form, onRestart }: {
   profileId: string;
   answers: Answers;
   form: FormData;
   onRestart: () => void;
 }) {
-  const profile = QUIZ_PROFILES[profileId];
+  const { lang } = useLang();
+  const t = useT();
+  const r = t.result;
+  const questions = getQuestions(lang);
+  const profiles = getProfiles(lang);
+  const profile = profiles[profileId];
   if (!profile) return null;
 
-  const lookup = (qId: string): string | null => {
-    const q = QUIZ_QUESTIONS.find(x => x.id === qId);
-    if (!q) return null;
+  const lookup = (qId: string): string => {
+    const q = questions.find(x => x.id === qId);
+    if (!q) return '—';
     const v = answers[qId];
-    if (!v) return null;
-    if (Array.isArray(v)) return v.map(t => q.options.find(o => o.tag === t)?.label).filter(Boolean).join(', ');
-    return q.options.find(o => o.tag === v)?.label ?? null;
+    if (!v) return '—';
+    if (Array.isArray(v)) return v.map(tag => q.options.find(o => o.tag === tag)?.label).filter(Boolean).join(', ') || '—';
+    return q.options.find(o => o.tag === v)?.label ?? '—';
   };
 
   const summary = {
@@ -508,15 +477,15 @@ function ResultScreen({
         <div className="result-hero-inner">
           <div className="result-eyebrow">
             <IconSparkle className="icon-sm" />
-            VOTRE PROFIL PATRIMONIAL
+            {r.eyebrow}
             {form?.prenom && <span className="result-eyebrow-name">· {form.prenom.toUpperCase()}</span>}
           </div>
           <h1 className="result-name">{profile.name}</h1>
           <p className="result-slogan">{profile.slogan}</p>
           <div className="result-badge-strip">
-            <div className="badge-pill"><span className="badge-pip" /> Profil défini</div>
-            <div className="badge-pill"><IconShield className="icon-sm" /> Recommandations sur-mesure</div>
-            <div className="badge-pill"><IconMail className="icon-sm" /> Envoyé à {form?.email ?? 'votre email'}</div>
+            <div className="badge-pill"><span className="badge-pip" /> {r.badgeProfile}</div>
+            <div className="badge-pill"><IconShield className="icon-sm" /> {r.badgeReco}</div>
+            <div className="badge-pill"><IconMail className="icon-sm" /> {r.badgeSentTo} {form?.email ?? '—'}</div>
           </div>
         </div>
       </section>
@@ -531,24 +500,18 @@ function ResultScreen({
       {/* Summary */}
       <section className="result-section result-summary-section">
         <div className="result-section-inner">
-          <div className="section-label">Votre situation en résumé</div>
-          <p className="summary-prose">
-            D&apos;après vos réponses : vous êtes{' '}
-            <strong>{summary.pro ?? '—'}</strong>, basé(e){' '}
-            <strong>{summary.geo ?? '—'}</strong>, avec un horizon de{' '}
-            <strong>{summary.horizon ?? '—'}</strong>, un capital mobilisable de{' '}
-            <strong>{summary.capital ?? '—'}</strong>, et une priorité sur{' '}
-            <strong>{summary.objectif ?? '—'}</strong>. Votre tolérance au risque est{' '}
-            <strong>{summary.risque ?? '—'}</strong>.
-          </p>
+          <div className="section-label">{r.summaryLabel}</div>
+          <p className="summary-prose"
+            dangerouslySetInnerHTML={{ __html: r.summary(summary).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }}
+          />
         </div>
       </section>
 
       {/* Recommendations */}
       <section className="result-section result-recos">
         <div className="result-section-inner">
-          <div className="section-label">Ce que nous vous recommandons d&apos;explorer</div>
-          <h2 className="recos-title">Vos classes d&apos;actifs prioritaires</h2>
+          <div className="section-label">{r.recoLabel}</div>
+          <h2 className="recos-title">{r.recoTitle}</h2>
           <div className="reco-grid">
             {profile.assets.map((asset, i) => (
               <article key={i} className="reco-card">
@@ -557,15 +520,15 @@ function ResultScreen({
                 <p className="reco-desc">{asset.desc}</p>
                 <div className="reco-meta">
                   <div className="reco-meta-row">
-                    <span className="reco-meta-label">Risque</span>
+                    <span className="reco-meta-label">{r.riskLabel}</span>
                     <span className={`risk-badge ${riskClass(asset.risk)}`}>{asset.risk}</span>
                   </div>
                   <div className="reco-meta-row">
-                    <span className="reco-meta-label">Horizon</span>
+                    <span className="reco-meta-label">{r.horizonLabel}</span>
                     <span className="reco-meta-val">{asset.horizon}</span>
                   </div>
                   <div className="reco-meta-row">
-                    <span className="reco-meta-label">Ticket</span>
+                    <span className="reco-meta-label">{r.ticketLabel}</span>
                     <span className="reco-meta-val">{asset.ticket}</span>
                   </div>
                 </div>
@@ -580,21 +543,12 @@ function ResultScreen({
         <div className="result-section-inner narrow">
           <div className="trust-grid">
             <div>
-              <div className="section-label gold">Pourquoi nous</div>
-              <h2 className="trust-title">Pourquoi nous faire confiance pour vous accompagner ?</h2>
+              <div className="section-label gold">{r.trustLabel}</div>
+              <h2 className="trust-title">{r.trustTitle}</h2>
             </div>
             <div>
-              <p>
-                <strong>Umdeny Capital</strong> est une structure d&apos;accompagnement patrimonial et
-                d&apos;investissement basée à Yaoundé, active au Cameroun et auprès de la diaspora africaine.
-                Nous travaillons avec des investisseurs particuliers et des entrepreneurs pour structurer,
-                diversifier et faire fructifier leur patrimoine — avec rigueur, transparence et une
-                connaissance terrain du marché africain.
-              </p>
-              <p>
-                Chaque client est accompagné individuellement.{' '}
-                <em>Nous ne vendons pas des produits — nous construisons des stratégies.</em>
-              </p>
+              <p>{r.trustP1}</p>
+              <p>{r.trustP2} <em>{r.trustEmphasis}</em></p>
             </div>
           </div>
         </div>
@@ -607,20 +561,15 @@ function ResultScreen({
             <div className="cta-card-bg" />
             <div className="cta-card-content">
               <IconCalendar className="icon-xl" />
-              <h2 className="cta-card-title">{profile.cta ?? "Prendre un appel avec notre équipe"}</h2>
-              <p className="cta-card-sub">{profile.ctaShort ?? "Appel de 30 minutes · Gratuit · Sans engagement · Disponible en semaine"}</p>
-              <a
-                className="btn btn-gold btn-lg cta-card-btn"
-                href="https://cal.com/vireel/umdeny-capital"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>Réserver mon créneau</span>
+              <h2 className="cta-card-title">{profile.cta ?? r.defaultCta}</h2>
+              <p className="cta-card-sub">{profile.ctaShort ?? r.defaultCtaShort}</p>
+              <a className="btn btn-gold btn-lg cta-card-btn" href="https://cal.com/vireel/umdeny-capital" target="_blank" rel="noopener noreferrer">
+                <span>{r.bookBtn}</span>
                 <IconArrow className="icon-md" />
               </a>
             </div>
           </div>
-          <button className="restart-link" onClick={onRestart}>← Refaire le quiz depuis le début</button>
+          <button className="restart-link" onClick={onRestart}>{r.restart}</button>
         </div>
       </section>
     </div>
@@ -630,6 +579,7 @@ function ResultScreen({
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 const STORAGE_KEY = 'umdeny_quiz_state_v1';
+const LANG_KEY = 'umdeny_lang';
 
 type Stage = 'welcome' | 'quiz' | 'capture' | 'result';
 
@@ -642,21 +592,29 @@ type AppState = {
 };
 
 const initialState: AppState = {
-  stage: 'welcome', index: 0, answers: {}, form: { pays: 'Cameroun' }, profileId: null,
+  stage: 'welcome', index: 0, answers: {}, form: {}, profileId: null,
 };
 
 export default function QuizApp() {
   const [state, setState] = useState<AppState>(initialState);
+  const [lang, setLangState] = useState<Lang>('fr');
   const [transitionKey, setTransitionKey] = useState(0);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
+      const savedLang = localStorage.getItem(LANG_KEY) as Lang | null;
+      if (savedLang === 'fr' || savedLang === 'en') setLangState(savedLang);
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) setState(JSON.parse(raw));
     } catch {}
     setHydrated(true);
   }, []);
+
+  const setLang = (l: Lang) => {
+    setLangState(l);
+    try { localStorage.setItem(LANG_KEY, l); } catch {}
+  };
 
   useEffect(() => {
     if (!hydrated) return;
@@ -670,13 +628,11 @@ export default function QuizApp() {
   const setAnswer = (qId: string, value: string | string[]) =>
     setState(s => ({ ...s, answers: { ...s.answers, [qId]: value } }));
 
-  const start = () => {
-    setState(s => ({ ...s, stage: 'quiz', index: 0 }));
-    setTransitionKey(k => k + 1);
-  };
+  const start = () => { setState(s => ({ ...s, stage: 'quiz', index: 0 })); setTransitionKey(k => k + 1); };
 
   const next = () => {
-    if (state.index < QUIZ_QUESTIONS.length - 1) {
+    const total = getQuestions(lang).length;
+    if (state.index < total - 1) {
       setState(s => ({ ...s, index: s.index + 1 }));
       setTransitionKey(k => k + 1);
     } else {
@@ -686,10 +642,7 @@ export default function QuizApp() {
 
   const back = () => {
     if (state.stage === 'capture') { setState(s => ({ ...s, stage: 'quiz' })); return; }
-    if (state.index > 0) {
-      setState(s => ({ ...s, index: s.index - 1 }));
-      setTransitionKey(k => k + 1);
-    }
+    if (state.index > 0) { setState(s => ({ ...s, index: s.index - 1 })); setTransitionKey(k => k + 1); }
   };
 
   const submit = () => {
@@ -706,43 +659,42 @@ export default function QuizApp() {
   if (!hydrated) return null;
 
   const { stage, index, answers, form, profileId } = state;
+  const t = ui[lang];
 
   return (
-    <div className={`app stage-${stage}`}>
-      <Navbar onRestart={restart} showRestart={stage !== 'welcome'} />
-      <main className="app-main">
-        {stage === 'welcome' && <WelcomeScreen onStart={start} />}
-        {stage === 'quiz' && (
-          <QuestionScreen
-            index={index}
-            answers={answers}
-            setAnswer={setAnswer}
-            onNext={next}
-            onBack={back}
-            transitionKey={transitionKey}
-          />
-        )}
-        {stage === 'capture' && (
-          <CaptureScreen
-            form={form}
-            setForm={(f) => setState(s => ({ ...s, form: f }))}
-            onSubmit={submit}
-            onBack={back}
-          />
-        )}
-        {stage === 'result' && profileId && (
-          <ResultScreen profileId={profileId} answers={answers} form={form} onRestart={restart} />
-        )}
-      </main>
-      <footer className="app-footer">
-        <div className="footer-inner">
-          <span>© 2025 Umdeny Capital</span>
-          <span className="footer-sep">·</span>
-          <a href="#" onClick={e => e.preventDefault()}>Politique de confidentialité</a>
-          <span className="footer-sep">·</span>
-          <a href="mailto:direction@umdeny.com">direction@umdeny.com</a>
-        </div>
-      </footer>
-    </div>
+    <LangContext.Provider value={{ lang, setLang }}>
+      <div className={`app stage-${stage}`}>
+        <Navbar onRestart={restart} showRestart={stage !== 'welcome'} />
+        <main className="app-main">
+          {stage === 'welcome' && <WelcomeScreen onStart={start} />}
+          {stage === 'quiz' && (
+            <QuestionScreen
+              index={index} answers={answers} setAnswer={setAnswer}
+              onNext={next} onBack={back} transitionKey={transitionKey}
+            />
+          )}
+          {stage === 'capture' && (
+            <CaptureScreen
+              form={form}
+              setForm={(f) => setState(s => ({ ...s, form: f }))}
+              onSubmit={submit}
+              onBack={back}
+            />
+          )}
+          {stage === 'result' && profileId && (
+            <ResultScreen profileId={profileId} answers={answers} form={form} onRestart={restart} />
+          )}
+        </main>
+        <footer className="app-footer">
+          <div className="footer-inner">
+            <span>{t.footer.copy}</span>
+            <span className="footer-sep">·</span>
+            <a href="#" onClick={e => e.preventDefault()}>{t.footer.privacy}</a>
+            <span className="footer-sep">·</span>
+            <a href="mailto:direction@umdeny.com">direction@umdeny.com</a>
+          </div>
+        </footer>
+      </div>
+    </LangContext.Provider>
   );
 }
