@@ -370,11 +370,12 @@ function Field({ label, required, type = 'text', value, onChange, placeholder, h
   );
 }
 
-function CaptureScreen({ form, setForm, onSubmit, onBack }: {
+function CaptureScreen({ form, setForm, onSubmit, onBack, submitting }: {
   form: FormData;
   setForm: (f: FormData) => void;
   onSubmit: () => void;
   onBack: () => void;
+  submitting: boolean;
 }) {
   const t = useT();
   const c = t.capture;
@@ -437,8 +438,8 @@ function CaptureScreen({ form, setForm, onSubmit, onBack }: {
             </label>
           </div>
 
-          <button type="submit" className={`btn btn-gold btn-lg capture-submit${valid ? '' : ' disabled'}`} disabled={!valid}>
-            <span>{c.submit}</span>
+          <button type="submit" className={`btn btn-gold btn-lg capture-submit${valid && !submitting ? '' : ' disabled'}`} disabled={!valid || submitting}>
+            <span>{submitting ? c.submitting : c.submit}</span>
             <IconArrow className="icon-md" />
           </button>
         </form>
@@ -618,6 +619,7 @@ export default function QuizApp() {
   const [lang, setLangState] = useState<Lang>('fr');
   const [transitionKey, setTransitionKey] = useState(0);
   const [hydrated, setHydrated] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     try {
@@ -663,9 +665,31 @@ export default function QuizApp() {
     if (state.index > 0) { setState(s => ({ ...s, index: s.index - 1 })); setTransitionKey(k => k + 1); }
   };
 
-  const submit = () => {
-    const pid = computeProfile(state.answers);
-    setState(s => ({ ...s, profileId: pid, stage: 'result' }));
+  const submit = async () => {
+    setSubmitting(true);
+    const { prenom, nom, email, tel, pays, consentContact, consentRGPD } = state.form;
+    try {
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prenom, nom, email,
+          telephone: tel,
+          pays,
+          consentement_contact: consentContact ?? false,
+          consentement_rgpd: consentRGPD ?? false,
+          answers: state.answers,
+        }),
+      });
+      const data = await res.json();
+      const pid = res.ok ? data.profil : computeProfile(state.answers);
+      setState(s => ({ ...s, profileId: pid, stage: 'result' }));
+    } catch {
+      const pid = computeProfile(state.answers);
+      setState(s => ({ ...s, profileId: pid, stage: 'result' }));
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const restart = () => {
@@ -697,6 +721,7 @@ export default function QuizApp() {
               setForm={(f) => setState(s => ({ ...s, form: f }))}
               onSubmit={submit}
               onBack={back}
+              submitting={submitting}
             />
           )}
           {stage === 'result' && profileId && (

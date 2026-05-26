@@ -323,7 +323,7 @@ export const QUIZ_PROFILES: Record<string, Profile> = {
 
 export type Answers = Record<string, string | string[]>;
 
-export function computeProfile(answers: Answers): string {
+function buildScores(answers: Answers) {
   const tags = new Set<string>();
   Object.values(answers).forEach(v => {
     if (Array.isArray(v)) v.forEach(t => tags.add(t));
@@ -332,13 +332,13 @@ export function computeProfile(answers: Answers): string {
   const has = (t: string) => tags.has(t);
   const any = (...arr: string[]) => arr.some(t => tags.has(t));
 
-  if (has('OBJ_HERITAGE') || has('PAT_HERITAGE')) return 'HERITIER';
-  if (has('CAP_ZERO') && has('OBJ_CONSTRUCTION')) return 'PROJET';
-  if (
-    (has('ENTREPRENEUR') || has('LIBERAL') || has('RENTIER')) &&
-    (has('PAT_ENTREPRISE') || has('PAT_MULTI')) &&
-    !has('NIV_OFFENSIF')
-  ) return 'ENTREPRENEUR';
+  const earlyExit =
+    has('OBJ_HERITAGE') || has('PAT_HERITAGE') ? 'HERITIER'
+    : has('CAP_ZERO') && has('OBJ_CONSTRUCTION') ? 'PROJET'
+    : (has('ENTREPRENEUR') || has('LIBERAL') || has('RENTIER')) &&
+      (has('PAT_ENTREPRISE') || has('PAT_MULTI')) &&
+      !has('NIV_OFFENSIF') ? 'ENTREPRENEUR'
+    : null;
 
   const scores: Record<string, number> = {
     GARDIEN: 0, EQUILIBRISTE: 0, BATISSEUR: 0, DYNAMIQUE: 0, OPPORTUNISTE: 0, PROJET: 0,
@@ -375,9 +375,29 @@ export function computeProfile(answers: Answers): string {
   if (any('FREIN_CAPITAL', 'FREIN_SAVOIR')) scores.PROJET += 1;
   if (has('NIV_OFFENSIF') || has('NIV_ELEVE')) scores.PROJET -= 5;
 
+  return { earlyExit, scores };
+}
+
+export function computeProfile(answers: Answers): string {
+  const { earlyExit, scores } = buildScores(answers);
+  if (earlyExit) return earlyExit;
   let best = 'EQUILIBRISTE', bestScore = -Infinity;
   Object.entries(scores).forEach(([k, v]) => {
     if (v > bestScore) { bestScore = v; best = k; }
   });
   return best;
+}
+
+export function computeResult(answers: Answers): {
+  profil: string;
+  secondaire: string | null;
+  scores: Record<string, number>;
+} {
+  const { earlyExit, scores } = buildScores(answers);
+  if (earlyExit) return { profil: earlyExit, secondaire: null, scores };
+
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const profil = sorted[0][0];
+  const secondaire = sorted[1][1] === sorted[0][1] ? sorted[1][0] : null;
+  return { profil, secondaire, scores };
 }

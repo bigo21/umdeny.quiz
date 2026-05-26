@@ -53,6 +53,7 @@ export const ui = {
       privacyLink: "politique de confidentialité",
       consentRgpdEnd: "d'Umdeny Capital.",
       submit: "Voir mon profil patrimonial",
+      submitting: "Envoi en cours…",
       countries: [
         "Cameroun",
         "Côte d'Ivoire",
@@ -159,6 +160,7 @@ export const ui = {
       privacyLink: "privacy policy",
       consentRgpdEnd: "of Umdeny Capital.",
       submit: "See my wealth profile",
+      submitting: "Submitting…",
       countries: [
         "Cameroon",
         "Côte d'Ivoire",
