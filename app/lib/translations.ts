@@ -108,7 +108,7 @@ export const ui = {
       restart: "← Refaire le quiz depuis le début",
     },
     footer: {
-      copy: "© 2025 Umdeny Holdings · Yaoundé, Cameroun",
+      copy: "© 2025 Umdeny Holdings",
       privacy: "Politique de confidentialité",
     },
   },
@@ -214,7 +214,7 @@ export const ui = {
       restart: "← Retake the quiz from the start",
     },
     footer: {
-      copy: "© 2025 Umdeny Holdings · Yaoundé, Cameroon",
+      copy: "© 2025 Umdeny Holdings",
       privacy: "Privacy policy",
     },
   },

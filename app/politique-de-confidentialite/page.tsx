@@ -108,7 +108,7 @@ export default function PolitiqueDeConfidentialite() {
       {/* Header */}
       <header style={{ background: NAVY, padding: '20px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link href="/">
-          <Image src="/umdeny-logo-dark.png" alt="Umdeny Capital" width={130} height={28} style={{ height: '28px', width: 'auto' }} />
+          <Image src="/umdeny-logo-light.png" alt="Umdeny Capital" width={130} height={28} style={{ height: '28px', width: 'auto' }} />
         </Link>
         <Link href="/" style={{ color: '#ffffff', fontSize: '13px', opacity: 0.7, textDecoration: 'none' }}>
           ← Retour au quiz
