@@ -96,7 +96,7 @@ function Navbar({ onRestart, showRestart }: { onRestart: () => void; showRestart
     <header className="navbar">
       <div className="navbar-inner">
         <a className="navbar-brand" href="#" onClick={(e) => { e.preventDefault(); if (showRestart) onRestart(); }}>
-          <Image src="/umdeny-pictogram.png" alt="Umdeny Capital" width={160} height={34} style={{ height: '34px', width: 'auto' }} />
+          <Image src="/umdeny-logo-dark.png" alt="Umdeny Capital" width={160} height={34} style={{ height: '34px', width: 'auto' }} />
         </a>
         <div className="navbar-actions">
           <button
