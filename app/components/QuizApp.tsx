@@ -650,7 +650,7 @@ export default function QuizApp() {
             <span className="footer-sep">·</span>
             <Link href="/politique-de-confidentialite">{t.footer.privacy}</Link>
             <span className="footer-sep">·</span>
-            <a href="mailto:direction@umdeny.com">direction@umdeny.com</a>
+            <a href="mailto:capital@umdeny.com">capital@umdeny.com</a>
           </div>
         </footer>
       </div>

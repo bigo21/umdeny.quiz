@@ -15,7 +15,7 @@ const sections: { title: string; content: React.ReactNode }[] = [
     content: (
       <>
         <p>Le présent quiz patrimonial est édité et exploité par <strong>Umdeny Capital</strong>, entité du groupe Umdeny Holding, société de droit camerounais immatriculée au Registre du Commerce et du Crédit Mobilier de Yaoundé.</p>
-        <p>Contact : <a href="mailto:direction@umdeny.com" style={{ color: GOLD }}>direction@umdeny.com</a></p>
+        <p>Contact : <a href="mailto:capital@umdeny.com" style={{ color: GOLD }}>capital@umdeny.com</a></p>
       </>
     ),
   },
@@ -88,7 +88,7 @@ const sections: { title: string; content: React.ReactNode }[] = [
         <p><strong>Droit d'opposition :</strong> vous pouvez vous opposer à tout moment au traitement de vos données à des fins de prospection commerciale.</p>
         <p><strong>Droit à la portabilité :</strong> vous pouvez demander à recevoir vos données dans un format structuré, couramment utilisé et lisible par machine.</p>
         <p><strong>Droit de retrait du consentement :</strong> vous pouvez retirer votre consentement à tout moment, sans que cela remette en cause la licéité des traitements effectués avant ce retrait.</p>
-        <p style={{ marginTop: '16px' }}>Pour exercer l'un de ces droits, adressez votre demande par email à : <a href="mailto:direction@umdeny.com" style={{ color: GOLD, fontWeight: 600 }}>direction@umdeny.com</a></p>
+        <p style={{ marginTop: '16px' }}>Pour exercer l'un de ces droits, adressez votre demande par email à : <a href="mailto:capital@umdeny.com" style={{ color: GOLD, fontWeight: 600 }}>capital@umdeny.com</a></p>
         <p>Nous nous engageons à répondre dans un délai maximum de 30 jours calendaires.</p>
       </>
     ),
@@ -137,7 +137,7 @@ const sections: { title: string; content: React.ReactNode }[] = [
     content: (
       <>
         <p>Pour toute question relative à la présente politique ou au traitement de vos données personnelles, vous pouvez nous contacter à l'adresse suivante :</p>
-        <p><strong>Umdeny Capital</strong> · Email : <a href="mailto:direction@umdeny.com" style={{ color: GOLD }}>direction@umdeny.com</a></p>
+        <p><strong>Umdeny Capital</strong> · Email : <a href="mailto:capital@umdeny.com" style={{ color: GOLD }}>capital@umdeny.com</a></p>
         <p style={{ marginTop: '12px' }}>Si vous estimez que vos droits ne sont pas respectés après nous avoir contactés, vous disposez du droit d'introduire une réclamation auprès de l'autorité compétente en matière de protection des données dans votre pays de résidence.</p>
       </>
     ),
@@ -181,7 +181,7 @@ export default function PolitiqueDeConfidentialite() {
       </main>
 
       <footer style={{ borderTop: '1px solid #e5e5e5', padding: '24px', textAlign: 'center', fontSize: '12px', color: '#aaa' }}>
-        © 2025 Umdeny Capital · <a href="mailto:direction@umdeny.com" style={{ color: '#aaa' }}>direction@umdeny.com</a>
+        © 2025 Umdeny Capital · <a href="mailto:capital@umdeny.com" style={{ color: '#aaa' }}>capital@umdeny.com</a>
       </footer>
     </div>
   );
