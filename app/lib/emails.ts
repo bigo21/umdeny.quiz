@@ -43,7 +43,7 @@ function layout(body: string): string {
     `<p style="margin:0;font-size:11px;color:#888;text-align:center;line-height:1.6;">` +
     `Umdeny Capital &middot; Yaound&eacute;, Cameroon &middot; <a href="mailto:capital@umdeny.com" style="color:#888;">capital@umdeny.com</a><br>` +
     `Vous recevez cet email car vous avez compl&eacute;t&eacute; le quiz patrimonial Umdeny Capital.<br>` +
-    `<a href="https://quiz.umdeny.com/politique-de-confidentialite" style="color:#C9A84C;">Politique de confidentialit&eacute;</a>` +
+    `<a href="https://quizz.umdeny.com/politique-de-confidentialite" style="color:#C9A84C;">Politique de confidentialit&eacute;</a>` +
     `</p></td></tr>` +
     `</table></td></tr></table></body></html>`
   );
@@ -85,21 +85,28 @@ export async function sendProspectEmail(opts: {
     : 'Merci d&rsquo;avoir compl&eacute;t&eacute; votre diagnostic patrimonial. Voici votre r&eacute;sultat.';
   const profileLabel = isEn ? 'Your profile' : 'Votre profil';
   const recommendLabel = isEn ? 'What we recommend exploring' : 'Ce que nous vous recommandons d&rsquo;explorer';
+  const avoidLabel = isEn ? 'What you should avoid' : 'Ce que vous devez &eacute;viter';
   const summaryLabel = isEn ? 'Your situation in brief' : 'Votre situation en r&eacute;sum&eacute;';
+  const nextStepLabel = isEn ? 'Next step' : 'La prochaine &eacute;tape';
   const summaryText = isEn
     ? `Based on your answers, you are <strong>${look('Q3')}</strong>, aged <strong>${look('Q2')}</strong>, based in <strong>${look('Q1')}</strong>, with a <strong>${look('Q10')}</strong> horizon, available capital of <strong>${look('Q7')}</strong>, and a focus on <strong>${look('Q6')}</strong>. Your risk tolerance is <strong>${look('Q13')}</strong>.`
     : `D&rsquo;apr&egrave;s vos r&eacute;ponses, vous &ecirc;tes <strong>${look('Q3')}</strong>, &acirc;g&eacute;(e) de <strong>${look('Q2')}</strong>, bas&eacute;(e) en <strong>${look('Q1')}</strong>, avec un horizon de <strong>${look('Q10')}</strong>, un capital mobilisable de <strong>${look('Q7')}</strong>, et une priorit&eacute; sur <strong>${look('Q6')}</strong>. Votre tol&eacute;rance au risque est <strong>${look('Q13')}</strong>.`;
-  const ctaTitle = isEn ? 'Ready to go further?' : 'Pr&ecirc;t(e) &agrave; aller plus loin&nbsp;?';
   const ctaBody = isEn
-    ? 'Our team is available for a free, no-commitment advisory call.'
-    : 'Notre &eacute;quipe est disponible pour un appel de conseil gratuit et sans engagement.';
-  const ctaBtn = isEn ? 'Book your call' : 'R&eacute;server votre appel';
+    ? 'If you would like to go further and get personalised recommendations adapted to your real situation, our team is available for an advisory call.'
+    : 'Si vous souhaitez aller plus loin et obtenir des recommandations personnalis&eacute;es adapt&eacute;es &agrave; votre situation r&eacute;elle, notre &eacute;quipe est disponible pour un appel de conseil.';
+  const ctaBtn = isEn ? 'Book your free call' : 'R&eacute;server votre appel gratuit';
   const ctaMeta = isEn
-    ? `${callDuration} minutes &middot; Free &middot; No commitment &middot; Available weekdays`
-    : `${callDuration} minutes &middot; Gratuit &middot; Sans engagement &middot; Disponible en semaine`;
+    ? `${callDuration}-minute call &middot; No commitment &middot; Available weekdays`
+    : `Appel de ${callDuration} minutes &middot; Sans engagement &middot; Disponible en semaine`;
   const signoff = isEn
     ? 'See you soon,<br><strong>The Umdeny Capital team</strong>'
     : "À bientôt,<br><strong>L'équipe Umdeny Capital</strong>";
+
+  const avoidHtml = (profile.avoid ?? []).map(item =>
+    `<tr style="border-bottom:1px solid #f5e6e6;">` +
+    `<td style="padding:10px 16px;font-size:13px;color:#555;line-height:1.6;">&bull;&nbsp;${item}</td>` +
+    `</tr>`
+  ).join('');
 
   const body =
     `<p style="margin:0 0 8px;font-size:16px;color:${NAVY};">${greeting} <strong>${prenom}</strong>,</p>` +
@@ -112,12 +119,21 @@ export async function sendProspectEmail(opts: {
     `<p style="margin:0;font-size:14px;color:${GOLD};font-style:italic;">${profile.slogan}</p>` +
     `</td></tr></table>` +
 
-    `<p style="margin:0 0 24px;font-size:14px;color:#333;line-height:1.8;">${profile.description}</p>` +
+    profile.description.split('\n\n').map((para, i, arr) =>
+      `<p style="margin:0 0 ${i < arr.length - 1 ? '12' : '24'}px;font-size:14px;color:#333;line-height:1.8;">${para}</p>`
+    ).join('') +
 
     `<p style="margin:0 0 16px;font-size:16px;font-weight:700;color:${NAVY};">${recommendLabel}</p>` +
     `<table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #eee;border-radius:6px;margin-bottom:32px;border-collapse:collapse;">` +
     assetsHtml +
     `</table>` +
+
+    (avoidHtml
+      ? `<p style="margin:0 0 16px;font-size:16px;font-weight:700;color:${NAVY};">${avoidLabel}</p>` +
+        `<table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #f0d8d8;border-radius:6px;margin-bottom:32px;border-collapse:collapse;">` +
+        avoidHtml +
+        `</table>`
+      : '') +
 
     `<table width="100%" cellpadding="0" cellspacing="0" style="background:${CREAM};border-radius:8px;margin-bottom:32px;">` +
     `<tr><td style="padding:24px 28px;">` +
@@ -127,7 +143,7 @@ export async function sendProspectEmail(opts: {
 
     `<table width="100%" cellpadding="0" cellspacing="0" style="background:${NAVY};border-radius:8px;margin-bottom:40px;">` +
     `<tr><td style="padding:28px 32px;text-align:center;">` +
-    `<p style="margin:0 0 8px;font-size:15px;color:#ffffff;font-weight:600;">${ctaTitle}</p>` +
+    `<p style="margin:0 0 8px;font-size:13px;font-weight:700;color:${GOLD};text-transform:uppercase;letter-spacing:1px;">${nextStepLabel}</p>` +
     `<p style="margin:0 0 20px;font-size:13px;color:#ccc;line-height:1.6;">${ctaBody}</p>` +
     `<a href="${CAL_URL}" style="display:inline-block;background:${GOLD};color:${NAVY};font-weight:700;font-size:14px;padding:14px 28px;border-radius:6px;text-decoration:none;">${ctaBtn}</a>` +
     `<p style="margin:16px 0 0;font-size:12px;color:#aaa;">${ctaMeta}</p>` +

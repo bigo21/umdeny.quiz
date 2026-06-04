@@ -26,6 +26,7 @@ export type Profile = {
   slogan: string;
   description: string;
   assets: Asset[];
+  avoid?: string[];
   cta?: string;
   ctaShort?: string;
 };
