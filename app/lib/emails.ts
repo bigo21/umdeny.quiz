@@ -87,8 +87,8 @@ export async function sendProspectEmail(opts: {
   const recommendLabel = isEn ? 'What we recommend exploring' : 'Ce que nous vous recommandons d&rsquo;explorer';
   const summaryLabel = isEn ? 'Your situation in brief' : 'Votre situation en r&eacute;sum&eacute;';
   const summaryText = isEn
-    ? `Based on your answers, you are <strong>${look('Q2')}</strong>, based in <strong>${look('Q1')}</strong>, with a <strong>${look('Q9')}</strong> horizon, available capital of <strong>${look('Q6')}</strong>, and a focus on <strong>${look('Q5')}</strong>. Your risk tolerance is <strong>${look('Q12')}</strong>.`
-    : `D&rsquo;apr&egrave;s vos r&eacute;ponses, vous &ecirc;tes <strong>${look('Q2')}</strong>, bas&eacute;(e) en <strong>${look('Q1')}</strong>, avec un horizon de <strong>${look('Q9')}</strong>, un capital mobilisable de <strong>${look('Q6')}</strong>, et une priorit&eacute; sur <strong>${look('Q5')}</strong>. Votre tol&eacute;rance au risque est <strong>${look('Q12')}</strong>.`;
+    ? `Based on your answers, you are <strong>${look('Q3')}</strong>, aged <strong>${look('Q2')}</strong>, based in <strong>${look('Q1')}</strong>, with a <strong>${look('Q10')}</strong> horizon, available capital of <strong>${look('Q7')}</strong>, and a focus on <strong>${look('Q6')}</strong>. Your risk tolerance is <strong>${look('Q13')}</strong>.`
+    : `D&rsquo;apr&egrave;s vos r&eacute;ponses, vous &ecirc;tes <strong>${look('Q3')}</strong>, &acirc;g&eacute;(e) de <strong>${look('Q2')}</strong>, bas&eacute;(e) en <strong>${look('Q1')}</strong>, avec un horizon de <strong>${look('Q10')}</strong>, un capital mobilisable de <strong>${look('Q7')}</strong>, et une priorit&eacute; sur <strong>${look('Q6')}</strong>. Votre tol&eacute;rance au risque est <strong>${look('Q13')}</strong>.`;
   const ctaTitle = isEn ? 'Ready to go further?' : 'Pr&ecirc;t(e) &agrave; aller plus loin&nbsp;?';
   const ctaBody = isEn
     ? 'Our team is available for a free, no-commitment advisory call.'
@@ -160,12 +160,12 @@ export async function sendTeamEmail(opts: {
   const look = (qId: string) => lookupLabel(questions, qId, answers);
 
   const qList: [string, string][] = [
-    ['Q1', 'G&eacute;ographie'], ['Q2', 'Situation pro'], ['Q3', 'Secteur'],
-    ['Q4', 'Exp&eacute;rience'], ['Q5', 'Objectif'], ['Q6', 'Capital'],
-    ['Q7', "Mode d&rsquo;investissement"], ['Q8', 'Patrimoine existant'],
-    ['Q9', 'Horizon'], ['Q10', 'Projet de vie'], ['Q11', 'R&eacute;action &agrave; la perte'],
-    ['Q12', 'Niveau de risque'], ['Q13', 'Implication'],
-    ['Q14', 'Affinit&eacute;s sectorielles'], ['Q15', 'Valeurs'], ['Q16', 'Frein principal'],
+    ['Q1', 'G&eacute;ographie'], ['Q2', 'Tranche d&rsquo;&acirc;ge'], ['Q3', 'Situation pro'], ['Q4', 'Secteur'],
+    ['Q5', 'Exp&eacute;rience'], ['Q6', 'Objectif'], ['Q7', 'Capital'],
+    ['Q8', "Mode d&rsquo;investissement"], ['Q9', 'Patrimoine existant'],
+    ['Q10', 'Horizon'], ['Q11', 'Projet de vie'], ['Q12', 'R&eacute;action &agrave; la perte'],
+    ['Q13', 'Niveau de risque'], ['Q14', 'Implication'],
+    ['Q15', 'Affinit&eacute;s sectorielles'], ['Q16', 'Valeurs'], ['Q17', 'Frein principal'],
   ];
 
   const qRows = qList.map(([qId, label]) =>

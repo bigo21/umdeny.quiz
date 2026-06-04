@@ -17,7 +17,7 @@ export const ui = {
       titleEm: "profil patrimonial",
       titleEnd: "?",
       subtitle:
-        "Répondez à 16 questions en 5 minutes et recevez instantanément une analyse personnalisée de votre situation, avec les stratégies et classes d'actifs les mieux adaptées à votre profil — gratuitement, par email.",
+        "Répondez à 17 questions en 5 minutes et recevez instantanément une analyse personnalisée de votre situation, avec les stratégies et classes d'actifs les mieux adaptées à votre profil — gratuitement, par email.",
       cta: "Démarrer mon diagnostic gratuit",
       r1: "Gratuit et sans engagement",
       r2: "Résultat envoyé par email",
@@ -103,7 +103,7 @@ export const ui = {
       titleEm: "wealth profile",
       titleEnd: "?",
       subtitle:
-        "Answer 16 questions in 5 minutes and instantly receive a personalised analysis of your situation, with the strategies and asset classes best suited to your profile — free, by email.",
+        "Answer 17 questions in 5 minutes and instantly receive a personalised analysis of your situation, with the strategies and asset classes best suited to your profile — free, by email.",
       cta: "Start my free assessment",
       r1: "Free and no commitment",
       r2: "Results sent by email",
@@ -217,7 +217,18 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q2', block: 'A', question: 'Quelle est votre situation professionnelle ?',
+      id: 'Q2', block: 'A', question: 'Quel est votre âge ?',
+      options: [
+        { tag: 'AGE_U25', label: 'Moins de 25 ans' },
+        { tag: 'AGE_25_34', label: '25 – 34 ans' },
+        { tag: 'AGE_35_44', label: '35 – 44 ans' },
+        { tag: 'AGE_45_54', label: '45 – 54 ans' },
+        { tag: 'AGE_55_64', label: '55 – 64 ans' },
+        { tag: 'AGE_65P', label: '65 ans et plus' },
+      ],
+    },
+    {
+      id: 'Q3', block: 'A', question: 'Quelle est votre situation professionnelle ?',
       options: [
         { tag: 'SALARIE', label: 'Salarié du secteur privé' },
         { tag: 'FONCT', label: "Fonctionnaire / Agent de l'État" },
@@ -229,7 +240,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q3', block: 'A', question: 'Dans quel secteur exercez-vous ?',
+      id: 'Q4', block: 'A', question: 'Dans quel secteur exercez-vous ?',
       options: [
         { tag: 'SEC_FINANCE', label: 'Banque, finance, assurance' },
         { tag: 'SEC_SANTE', label: 'Santé et pharmacie' },
@@ -245,7 +256,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q4', block: 'A', question: "Avez-vous déjà investi ou épargné de façon structurée ?",
+      id: 'Q5', block: 'A', question: "Avez-vous déjà investi ou épargné de façon structurée ?",
       options: [
         { tag: 'EXP_REGULIER', label: "Oui, j'investis ou j'épargne régulièrement depuis plusieurs années" },
         { tag: 'EXP_PONCTUEL', label: "Oui, j'ai déjà fait quelques placements ponctuels" },
@@ -255,7 +266,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q5', block: 'B', question: "Quel est votre objectif principal concernant votre argent aujourd'hui ?",
+      id: 'Q6', block: 'B', question: "Quel est votre objectif principal concernant votre argent aujourd'hui ?",
       options: [
         { tag: 'OBJ_CROISSANCE', label: "Faire fructifier un capital que j'ai déjà" },
         { tag: 'OBJ_REVENUS', label: 'Générer des revenus complémentaires réguliers sans toucher au capital' },
@@ -268,7 +279,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q6', block: 'B', question: "Quel montant êtes-vous en mesure d'allouer dans les 6 prochains mois ?",
+      id: 'Q7', block: 'B', question: "Quel montant êtes-vous en mesure d'allouer dans les 6 prochains mois ?",
       options: [
         { tag: 'CAP_ZERO', label: "Je n'ai pas encore de capital disponible" },
         { tag: 'CAP_XS', label: 'Moins de 100 000 FCFA' },
@@ -281,7 +292,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q7', block: 'B', question: 'Comment souhaitez-vous mobiliser ce capital ?',
+      id: 'Q8', block: 'B', question: 'Comment souhaitez-vous mobiliser ce capital ?',
       options: [
         { tag: 'MODE_UNIQUE', label: 'En une seule fois sur un placement ciblé' },
         { tag: 'MODE_PROG', label: 'En versements progressifs et réguliers' },
@@ -290,7 +301,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q8', block: 'B', question: 'Avez-vous déjà un patrimoine existant à valoriser ou structurer ?',
+      id: 'Q9', block: 'B', question: 'Avez-vous déjà un patrimoine existant à valoriser ou structurer ?',
       options: [
         { tag: 'PAT_IMMO', label: 'Oui, un ou plusieurs biens immobiliers' },
         { tag: 'PAT_EPARGNE', label: 'Oui, une épargne liquide dormante sur un compte' },
@@ -301,7 +312,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q9', block: 'C', question: 'Sur quel horizon envisagez-vous principalement vos investissements ?',
+      id: 'Q10', block: 'C', question: 'Sur quel horizon envisagez-vous principalement vos investissements ?',
       options: [
         { tag: 'HOR_COURT', label: "Moins d'un an — j'ai besoin de liquidités ou de résultats rapides" },
         { tag: 'HOR_1_3', label: '1 à 3 ans — horizon court à moyen terme' },
@@ -311,7 +322,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q10', block: 'C', question: 'Avez-vous un projet de vie particulier lié à cet investissement ?',
+      id: 'Q11', block: 'C', question: 'Avez-vous un projet de vie particulier lié à cet investissement ?',
       options: [
         { tag: 'PROJET_IMMO', label: 'Acquérir un bien immobilier' },
         { tag: 'PROJET_EDUCATION', label: 'Financer les études de mes enfants' },
@@ -323,7 +334,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q11', block: 'D',
+      id: 'Q12', block: 'D',
       question: 'Si votre investissement perdait 15 % de sa valeur en moins de 6 mois, quelle serait votre réaction ?',
       options: [
         { tag: 'RISQ_FUITE', label: 'Je vends immédiatement pour limiter les pertes' },
@@ -333,7 +344,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q12', block: 'D', question: "Quel niveau de risque correspond à votre philosophie d'investissement ?",
+      id: 'Q13', block: 'D', question: "Quel niveau de risque correspond à votre philosophie d'investissement ?",
       options: [
         { tag: 'NIV_SECU', label: 'Sécurité maximale — je préfère un rendement faible mais garanti' },
         { tag: 'NIV_MODERE', label: "Risque modéré — j'accepte quelques fluctuations pour un meilleur rendement" },
@@ -342,7 +353,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q13', block: 'D',
+      id: 'Q14', block: 'D',
       question: "Quel niveau d'implication souhaitez-vous avoir dans la gestion de vos investissements ?",
       options: [
         { tag: 'IMP_DELEGATION', label: 'Aucune — je veux déléguer entièrement à des professionnels' },
@@ -352,7 +363,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q14', block: 'E', multi: true, max: 3,
+      id: 'Q15', block: 'E', multi: true, max: 3,
       question: "Quels secteurs ou types d'actifs vous attirent le plus ?",
       hint: 'Plusieurs choix possibles · 3 maximum',
       options: [
@@ -369,7 +380,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q15', block: 'E',
+      id: 'Q16', block: 'E',
       question: 'Avez-vous des valeurs ou des causes que vous souhaitez refléter dans vos investissements ?',
       options: [
         { tag: 'VAL_IMPACT', label: 'Impact social et solidarité en Afrique' },
@@ -381,7 +392,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q16', block: 'E',
+      id: 'Q17', block: 'E',
       question: "Qu'est-ce qui vous freine le plus aujourd'hui dans votre démarche d'investissement ?",
       options: [
         { tag: 'FREIN_SAVOIR', label: "Je manque d'informations et de formation sur le sujet" },
@@ -408,7 +419,18 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q2', block: 'A', question: 'What is your professional situation?',
+      id: 'Q2', block: 'A', question: 'What is your age?',
+      options: [
+        { tag: 'AGE_U25', label: 'Under 25' },
+        { tag: 'AGE_25_34', label: '25 – 34' },
+        { tag: 'AGE_35_44', label: '35 – 44' },
+        { tag: 'AGE_45_54', label: '45 – 54' },
+        { tag: 'AGE_55_64', label: '55 – 64' },
+        { tag: 'AGE_65P', label: '65 and over' },
+      ],
+    },
+    {
+      id: 'Q3', block: 'A', question: 'What is your professional situation?',
       options: [
         { tag: 'SALARIE', label: 'Private sector employee' },
         { tag: 'FONCT', label: 'Civil servant / Government employee' },
@@ -420,7 +442,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q3', block: 'A', question: 'Which sector do you work in?',
+      id: 'Q4', block: 'A', question: 'Which sector do you work in?',
       options: [
         { tag: 'SEC_FINANCE', label: 'Banking, finance, insurance' },
         { tag: 'SEC_SANTE', label: 'Health and pharmaceuticals' },
@@ -436,7 +458,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q4', block: 'A', question: 'Have you already invested or saved in a structured way?',
+      id: 'Q5', block: 'A', question: 'Have you already invested or saved in a structured way?',
       options: [
         { tag: 'EXP_REGULIER', label: 'Yes, I invest or save regularly over several years' },
         { tag: 'EXP_PONCTUEL', label: "Yes, I've made some one-off investments" },
@@ -446,7 +468,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q5', block: 'B', question: 'What is your main goal for your money today?',
+      id: 'Q6', block: 'B', question: 'What is your main goal for your money today?',
       options: [
         { tag: 'OBJ_CROISSANCE', label: 'Grow capital I already have' },
         { tag: 'OBJ_REVENUS', label: 'Generate regular supplementary income without touching the principal' },
@@ -459,7 +481,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q6', block: 'B', question: 'How much are you able to allocate in the next 6 months?',
+      id: 'Q7', block: 'B', question: 'How much are you able to allocate in the next 6 months?',
       options: [
         { tag: 'CAP_ZERO', label: "I don't have any capital available yet" },
         { tag: 'CAP_XS', label: 'Less than 100,000 FCFA' },
@@ -472,7 +494,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q7', block: 'B', question: 'How would you like to deploy this capital?',
+      id: 'Q8', block: 'B', question: 'How would you like to deploy this capital?',
       options: [
         { tag: 'MODE_UNIQUE', label: 'All at once on a targeted investment' },
         { tag: 'MODE_PROG', label: 'In progressive, regular instalments' },
@@ -481,7 +503,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q8', block: 'B', question: 'Do you already have existing assets to grow or structure?',
+      id: 'Q9', block: 'B', question: 'Do you already have existing assets to grow or structure?',
       options: [
         { tag: 'PAT_IMMO', label: 'Yes, one or more real estate properties' },
         { tag: 'PAT_EPARGNE', label: 'Yes, liquid savings sitting in an account' },
@@ -492,7 +514,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q9', block: 'C', question: 'What is your main investment timeline?',
+      id: 'Q10', block: 'C', question: 'What is your main investment timeline?',
       options: [
         { tag: 'HOR_COURT', label: 'Less than 1 year — I need liquidity or fast results' },
         { tag: 'HOR_1_3', label: '1 to 3 years — short to medium term' },
@@ -502,7 +524,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q10', block: 'C', question: 'Do you have a specific life project tied to this investment?',
+      id: 'Q11', block: 'C', question: 'Do you have a specific life project tied to this investment?',
       options: [
         { tag: 'PROJET_IMMO', label: 'Acquire a property' },
         { tag: 'PROJET_EDUCATION', label: "Fund my children's education" },
@@ -514,7 +536,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q11', block: 'D',
+      id: 'Q12', block: 'D',
       question: 'If your investment lost 15% of its value in under 6 months, what would your reaction be?',
       options: [
         { tag: 'RISQ_FUITE', label: 'I sell immediately to limit losses' },
@@ -524,7 +546,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q12', block: 'D', question: 'What level of risk matches your investment philosophy?',
+      id: 'Q13', block: 'D', question: 'What level of risk matches your investment philosophy?',
       options: [
         { tag: 'NIV_SECU', label: 'Maximum safety — I prefer a low but guaranteed return' },
         { tag: 'NIV_MODERE', label: 'Moderate risk — I accept some fluctuations for a better return' },
@@ -533,7 +555,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q13', block: 'D', question: 'What level of involvement do you want in managing your investments?',
+      id: 'Q14', block: 'D', question: 'What level of involvement do you want in managing your investments?',
       options: [
         { tag: 'IMP_DELEGATION', label: 'None — I want to delegate entirely to professionals' },
         { tag: 'IMP_RAPPORTS', label: 'Minimal — receiving periodic reports is enough' },
@@ -542,7 +564,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q14', block: 'E', multi: true, max: 3,
+      id: 'Q15', block: 'E', multi: true, max: 3,
       question: 'Which sectors or asset types attract you most?',
       hint: 'Multiple choice · 3 maximum',
       options: [
@@ -559,7 +581,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q15', block: 'E',
+      id: 'Q16', block: 'E',
       question: 'Do you have values or causes you want to reflect in your investments?',
       options: [
         { tag: 'VAL_IMPACT', label: 'Social impact and solidarity in Africa' },
@@ -571,7 +593,7 @@ const questionsData: Record<Lang, Question[]> = {
       ],
     },
     {
-      id: 'Q16', block: 'E',
+      id: 'Q17', block: 'E',
       question: 'What is holding you back most in your investment journey today?',
       options: [
         { tag: 'FREIN_SAVOIR', label: 'I lack information and education on the subject' },
@@ -776,3 +798,25 @@ const profilesData: Record<Lang, Record<string, Profile>> = {
 export const getBlocks = (lang: Lang): Block[] => blocksData[lang];
 export const getQuestions = (lang: Lang): Question[] => questionsData[lang];
 export const getProfiles = (lang: Lang): Record<string, Profile> => profilesData[lang];
+
+export function getAltQ8(lang: Lang): Question {
+  return lang === 'en'
+    ? {
+        id: 'Q8', block: 'B',
+        question: "Would you be willing to start by saving a small amount each month if we showed you how?",
+        options: [
+          { tag: 'EPARGNE_OUI', label: "Yes, absolutely — I'm ready to start" },
+          { tag: 'EPARGNE_PEUT_ETRE', label: "Maybe — I want to understand how first" },
+          { tag: 'EPARGNE_NON', label: "Not right now" },
+        ],
+      }
+    : {
+        id: 'Q8', block: 'B',
+        question: "Seriez-vous prêt(e) à commencer par économiser une petite somme chaque mois si on vous montrait comment ?",
+        options: [
+          { tag: 'EPARGNE_OUI', label: "Oui, absolument — je suis prêt(e) à commencer" },
+          { tag: 'EPARGNE_PEUT_ETRE', label: "Peut-être — je veux d'abord comprendre comment" },
+          { tag: 'EPARGNE_NON', label: "Pas pour l'instant" },
+        ],
+      };
+}

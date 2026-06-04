@@ -52,7 +52,18 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q2', block: 'A', question: "Quelle est votre situation professionnelle ?",
+    id: 'Q2', block: 'A', question: "Quel est votre âge ?",
+    options: [
+      { tag: 'AGE_U25', label: "Moins de 25 ans" },
+      { tag: 'AGE_25_34', label: "25 – 34 ans" },
+      { tag: 'AGE_35_44', label: "35 – 44 ans" },
+      { tag: 'AGE_45_54', label: "45 – 54 ans" },
+      { tag: 'AGE_55_64', label: "55 – 64 ans" },
+      { tag: 'AGE_65P', label: "65 ans et plus" },
+    ],
+  },
+  {
+    id: 'Q3', block: 'A', question: "Quelle est votre situation professionnelle ?",
     options: [
       { tag: 'SALARIE', label: "Salarié du secteur privé" },
       { tag: 'FONCT', label: "Fonctionnaire / Agent de l'État" },
@@ -64,7 +75,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q3', block: 'A', question: "Dans quel secteur exercez-vous ?",
+    id: 'Q4', block: 'A', question: "Dans quel secteur exercez-vous ?",
     options: [
       { tag: 'SEC_FINANCE', label: "Banque, finance, assurance" },
       { tag: 'SEC_SANTE', label: "Santé et pharmacie" },
@@ -80,7 +91,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q4', block: 'A', question: "Avez-vous déjà investi ou épargné de façon structurée ?",
+    id: 'Q5', block: 'A', question: "Avez-vous déjà investi ou épargné de façon structurée ?",
     options: [
       { tag: 'EXP_REGULIER', label: "Oui, j'investis ou j'épargne régulièrement depuis plusieurs années" },
       { tag: 'EXP_PONCTUEL', label: "Oui, j'ai déjà fait quelques placements ponctuels" },
@@ -90,7 +101,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q5', block: 'B', question: "Quel est votre objectif principal concernant votre argent aujourd'hui ?",
+    id: 'Q6', block: 'B', question: "Quel est votre objectif principal concernant votre argent aujourd'hui ?",
     options: [
       { tag: 'OBJ_CROISSANCE', label: "Faire fructifier un capital que j'ai déjà" },
       { tag: 'OBJ_REVENUS', label: "Générer des revenus complémentaires réguliers sans toucher au capital" },
@@ -103,7 +114,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q6', block: 'B', question: "Quel montant êtes-vous en mesure d'allouer dans les 6 prochains mois ?",
+    id: 'Q7', block: 'B', question: "Quel montant êtes-vous en mesure d'allouer dans les 6 prochains mois ?",
     options: [
       { tag: 'CAP_ZERO', label: "Je n'ai pas encore de capital disponible" },
       { tag: 'CAP_XS', label: "Moins de 100 000 FCFA" },
@@ -116,7 +127,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q7', block: 'B', question: "Comment souhaitez-vous mobiliser ce capital ?",
+    id: 'Q8', block: 'B', question: "Comment souhaitez-vous mobiliser ce capital ?",
     options: [
       { tag: 'MODE_UNIQUE', label: "En une seule fois sur un placement ciblé" },
       { tag: 'MODE_PROG', label: "En versements progressifs et réguliers" },
@@ -125,7 +136,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q8', block: 'B', question: "Avez-vous déjà un patrimoine existant à valoriser ou structurer ?",
+    id: 'Q9', block: 'B', question: "Avez-vous déjà un patrimoine existant à valoriser ou structurer ?",
     options: [
       { tag: 'PAT_IMMO', label: "Oui, un ou plusieurs biens immobiliers" },
       { tag: 'PAT_EPARGNE', label: "Oui, une épargne liquide dormante sur un compte" },
@@ -136,7 +147,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q9', block: 'C', question: "Sur quel horizon envisagez-vous principalement vos investissements ?",
+    id: 'Q10', block: 'C', question: "Sur quel horizon envisagez-vous principalement vos investissements ?",
     options: [
       { tag: 'HOR_COURT', label: "Moins d'un an — j'ai besoin de liquidités ou de résultats rapides" },
       { tag: 'HOR_1_3', label: "1 à 3 ans — horizon court à moyen terme" },
@@ -146,7 +157,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q10', block: 'C', question: "Avez-vous un projet de vie particulier lié à cet investissement ?",
+    id: 'Q11', block: 'C', question: "Avez-vous un projet de vie particulier lié à cet investissement ?",
     options: [
       { tag: 'PROJET_IMMO', label: "Acquérir un bien immobilier" },
       { tag: 'PROJET_EDUCATION', label: "Financer les études de mes enfants" },
@@ -158,7 +169,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q11', block: 'D',
+    id: 'Q12', block: 'D',
     question: "Si votre investissement perdait 15 % de sa valeur en moins de 6 mois, quelle serait votre réaction ?",
     options: [
       { tag: 'RISQ_FUITE', label: "Je vends immédiatement pour limiter les pertes" },
@@ -168,7 +179,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q12', block: 'D', question: "Quel niveau de risque correspond à votre philosophie d'investissement ?",
+    id: 'Q13', block: 'D', question: "Quel niveau de risque correspond à votre philosophie d'investissement ?",
     options: [
       { tag: 'NIV_SECU', label: "Sécurité maximale — je préfère un rendement faible mais garanti" },
       { tag: 'NIV_MODERE', label: "Risque modéré — j'accepte quelques fluctuations pour un meilleur rendement" },
@@ -177,7 +188,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q13', block: 'D',
+    id: 'Q14', block: 'D',
     question: "Quel niveau d'implication souhaitez-vous avoir dans la gestion de vos investissements ?",
     options: [
       { tag: 'IMP_DELEGATION', label: "Aucune — je veux déléguer entièrement à des professionnels" },
@@ -187,7 +198,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q14', block: 'E', multi: true, max: 3,
+    id: 'Q15', block: 'E', multi: true, max: 3,
     question: "Quels secteurs ou types d'actifs vous attirent le plus ?",
     hint: "Plusieurs choix possibles · 3 maximum",
     options: [
@@ -204,7 +215,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q15', block: 'E',
+    id: 'Q16', block: 'E',
     question: "Avez-vous des valeurs ou des causes que vous souhaitez refléter dans vos investissements ?",
     options: [
       { tag: 'VAL_IMPACT', label: "Impact social et solidarité en Afrique" },
@@ -216,7 +227,7 @@ export const QUIZ_QUESTIONS: Question[] = [
     ],
   },
   {
-    id: 'Q16', block: 'E',
+    id: 'Q17', block: 'E',
     question: "Qu'est-ce qui vous freine le plus aujourd'hui dans votre démarche d'investissement ?",
     options: [
       { tag: 'FREIN_SAVOIR', label: "Je manque d'informations et de formation sur le sujet" },
@@ -532,6 +543,7 @@ function buildScores(answers: Answers) {
   const earlyExit =
     has('OBJ_HERITAGE') || has('PAT_HERITAGE') ? 'HERITIER'
     : has('CAP_ZERO') && has('OBJ_CONSTRUCTION') ? 'PROJET'
+    : has('AGE_U25') && has('EXP_ZERO') && !any('CAP_XL', 'CAP_XXL') ? 'PROJET'
     : (has('ENTREPRENEUR') || has('LIBERAL') || has('RENTIER')) &&
       (has('PAT_ENTREPRISE') || has('PAT_MULTI')) &&
       !has('NIV_OFFENSIF') ? 'ENTREPRENEUR'
@@ -542,6 +554,7 @@ function buildScores(answers: Answers) {
   };
 
   if (has('NIV_SECU')) scores.GARDIEN += 3;
+  if (any('AGE_55_64', 'AGE_65P') && has('NIV_SECU')) scores.GARDIEN += 3;
   if (any('RISQ_FUITE', 'RISQ_ATTENTE')) scores.GARDIEN += 2;
   if (any('OBJ_PROTECTION', 'OBJ_RETRAITE', 'OBJ_TRANSMISSION')) scores.GARDIEN += 2;
   if (any('CAP_M', 'CAP_L', 'CAP_XL', 'CAP_XXL')) scores.GARDIEN += 1;

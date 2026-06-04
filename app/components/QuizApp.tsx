@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { type Answers } from '@/app/lib/quizData';
 import {
-  ui, getBlocks, getQuestions,
+  ui, getBlocks, getQuestions, getAltQ8,
   type Lang,
 } from '@/app/lib/translations';
 
@@ -222,7 +222,7 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
         </div>
         <div className="welcome-meta">
           <div className="meta-item">
-            <div className="meta-num">16</div>
+            <div className="meta-num">17</div>
             <div className="meta-label">{w.meta1Label}</div>
           </div>
           <div className="meta-divider" />
@@ -257,7 +257,8 @@ function QuestionScreen({ index, answers, setAnswer, onNext, onBack, transitionK
   const t = useT();
   const questions = getQuestions(lang);
   const blocks = getBlocks(lang);
-  const q = questions[index];
+  const baseQ = questions[index];
+  const q = baseQ.id === 'Q8' && answers.Q7 === 'CAP_ZERO' ? getAltQ8(lang) : baseQ;
   const block = blocks.find(b => b.id === q.block)!;
   const value = answers[q.id];
   const multi = !!q.multi;
@@ -566,7 +567,16 @@ export default function QuizApp() {
       setState(s => ({ ...s, index: s.index + 1 }));
       setTransitionKey(k => k + 1);
     } else {
-      setState(s => ({ ...s, stage: 'capture' }));
+      const geoToPays: Record<string, Record<Lang, string>> = {
+        GEO_CMR: { fr: 'Cameroun', en: 'Cameroon' },
+      };
+      const geoTag = state.answers.Q1 as string | undefined;
+      const prefill = geoTag ? geoToPays[geoTag]?.[lang] : undefined;
+      setState(s => ({
+        ...s,
+        stage: 'capture',
+        form: { ...s.form, pays: s.form.pays ?? prefill },
+      }));
     }
   };
 
