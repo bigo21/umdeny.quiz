@@ -3,9 +3,9 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { computeProfile, type Answers } from '@/app/lib/quizData';
+import { type Answers } from '@/app/lib/quizData';
 import {
-  ui, getBlocks, getQuestions, getProfiles,
+  ui, getBlocks, getQuestions,
   type Lang,
 } from '@/app/lib/translations';
 
@@ -449,147 +449,57 @@ function CaptureScreen({ form, setForm, onSubmit, onBack, submitting }: {
   );
 }
 
-// ─── Result Screen ────────────────────────────────────────────────────────────
+// ─── Confirmation Screen ──────────────────────────────────────────────────────
 
-function riskClass(risk: string): string {
-  const s = (risk ?? '').toLowerCase();
-  if (s === 'faible' || s === 'low') return 'risk-low';
-  if (s === 'modéré' || s === 'moderate') return 'risk-mid';
-  if (s === 'élevé' || s === 'high') return 'risk-high';
-  return 'risk-none';
-}
-
-function ResultScreen({ profileId, answers, form, onRestart }: {
-  profileId: string;
-  answers: Answers;
-  form: FormData;
+function ConfirmationScreen({ email, prenom, onRestart }: {
+  email: string;
+  prenom?: string;
   onRestart: () => void;
 }) {
-  const { lang } = useLang();
   const t = useT();
-  const r = t.result;
-  const questions = getQuestions(lang);
-  const profiles = getProfiles(lang);
-  const profile = profiles[profileId];
-  if (!profile) return null;
-
-  const lookup = (qId: string): string => {
-    const q = questions.find(x => x.id === qId);
-    if (!q) return '—';
-    const v = answers[qId];
-    if (!v) return '—';
-    if (Array.isArray(v)) return v.map(tag => q.options.find(o => o.tag === tag)?.label).filter(Boolean).join(', ') || '—';
-    return q.options.find(o => o.tag === v)?.label ?? '—';
-  };
-
-  const summary = {
-    pro: lookup('Q2'), geo: lookup('Q1'), horizon: lookup('Q9'),
-    capital: lookup('Q6'), objectif: lookup('Q5'), risque: lookup('Q12'),
-  };
-
+  const c = t.confirmation;
   return (
     <div className="result-screen">
       <NavyOrnament side="right" opacity={0.05} />
       <NavyOrnament side="left-top" opacity={0.04} />
 
-      {/* Hero */}
       <section className="result-hero">
         <div className="result-hero-inner">
           <div className="result-eyebrow">
-            <IconSparkle className="icon-sm" />
-            {r.eyebrow}
-            {form?.prenom && <span className="result-eyebrow-name">· {form.prenom.toUpperCase()}</span>}
+            <IconCheck className="icon-sm" />
+            {c.eyebrow}
+            {prenom && <span className="result-eyebrow-name">· {prenom.toUpperCase()}</span>}
           </div>
-          <h1 className="result-name">{profile.name}</h1>
-          <p className="result-slogan">{profile.slogan}</p>
+          <h1 className="result-name">{c.title}</h1>
+          <p className="result-slogan">{c.titleEm}</p>
           <div className="result-badge-strip">
-            <div className="badge-pill"><span className="badge-pip" /> {r.badgeProfile}</div>
-            <div className="badge-pill"><IconShield className="icon-sm" /> {r.badgeReco}</div>
-            <div className="badge-pill"><IconMail className="icon-sm" /> {r.badgeSentTo} {form?.email ?? '—'}</div>
+            <div className="badge-pill"><IconMail className="icon-sm" /> {c.sentTo} {email}</div>
           </div>
         </div>
       </section>
 
-      {/* Description */}
       <section className="result-section result-desc">
         <div className="result-section-inner narrow">
-          <p>{profile.description}</p>
+          <p>{c.body}</p>
+          <p className="muted">{c.spam}</p>
         </div>
       </section>
 
-      {/* Summary */}
-      <section className="result-section result-summary-section">
-        <div className="result-section-inner">
-          <div className="section-label">{r.summaryLabel}</div>
-          <p className="summary-prose"
-            dangerouslySetInnerHTML={{ __html: r.summary(summary).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }}
-          />
-        </div>
-      </section>
-
-      {/* Recommendations */}
-      <section className="result-section result-recos">
-        <div className="result-section-inner">
-          <div className="section-label">{r.recoLabel}</div>
-          <h2 className="recos-title">{r.recoTitle}</h2>
-          <div className="reco-grid">
-            {profile.assets.map((asset, i) => (
-              <article key={i} className="reco-card">
-                <div className="reco-num">{String(i + 1).padStart(2, '0')}</div>
-                <h3 className="reco-name">{asset.name}</h3>
-                <p className="reco-desc">{asset.desc}</p>
-                <div className="reco-meta">
-                  <div className="reco-meta-row">
-                    <span className="reco-meta-label">{r.riskLabel}</span>
-                    <span className={`risk-badge ${riskClass(asset.risk)}`}>{asset.risk}</span>
-                  </div>
-                  <div className="reco-meta-row">
-                    <span className="reco-meta-label">{r.horizonLabel}</span>
-                    <span className="reco-meta-val">{asset.horizon}</span>
-                  </div>
-                  <div className="reco-meta-row">
-                    <span className="reco-meta-label">{r.ticketLabel}</span>
-                    <span className="reco-meta-val">{asset.ticket}</span>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust */}
-      <section className="result-section result-trust">
-        <div className="result-section-inner narrow">
-          <div className="trust-grid">
-            <div>
-              <div className="section-label gold">{r.trustLabel}</div>
-              <h2 className="trust-title">{r.trustTitle}</h2>
-            </div>
-            <div>
-              <p>{r.trustP1}</p>
-              <p>{r.trustP2} <em>{r.trustEmphasis}</em></p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
       <section className="result-section result-cta-section">
         <div className="result-section-inner narrow">
           <div className="cta-card">
             <div className="cta-card-bg" />
             <div className="cta-card-content">
               <IconCalendar className="icon-xl" />
-              <h2 className="cta-card-title">{profile.cta ?? r.defaultCta}</h2>
-              <p className="cta-card-sub">{profile.ctaShort ?? r.defaultCtaShort}</p>
+              <h2 className="cta-card-title">{c.ctaTitle}</h2>
+              <p className="cta-card-sub">{c.ctaSub}</p>
               <a className="btn btn-gold btn-lg cta-card-btn" href="https://cal.com/vireel/umdeny-capital" target="_blank" rel="noopener noreferrer">
-                <span>{r.bookBtn}</span>
+                <span>{c.ctaBtn}</span>
                 <IconArrow className="icon-md" />
               </a>
             </div>
           </div>
-          <button className="restart-link" onClick={onRestart}>{r.restart}</button>
+          <button className="restart-link" onClick={onRestart}>{c.restart}</button>
         </div>
       </section>
     </div>
@@ -608,11 +518,10 @@ type AppState = {
   index: number;
   answers: Answers;
   form: FormData;
-  profileId: string | null;
 };
 
 const initialState: AppState = {
-  stage: 'welcome', index: 0, answers: {}, form: {}, profileId: null,
+  stage: 'welcome', index: 0, answers: {}, form: {},
 };
 
 export default function QuizApp() {
@@ -670,7 +579,7 @@ export default function QuizApp() {
     setSubmitting(true);
     const { prenom, nom, email, tel, pays, consentContact, consentRGPD } = state.form;
     try {
-      const res = await fetch('/api/submit', {
+      await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -683,13 +592,8 @@ export default function QuizApp() {
           answers: state.answers,
         }),
       });
-      const data = await res.json();
-      const pid = res.ok ? data.profil : computeProfile(state.answers);
-      setState(s => ({ ...s, profileId: pid, stage: 'result' }));
-    } catch {
-      const pid = computeProfile(state.answers);
-      setState(s => ({ ...s, profileId: pid, stage: 'result' }));
     } finally {
+      setState(s => ({ ...s, stage: 'result' }));
       setSubmitting(false);
     }
   };
@@ -702,7 +606,7 @@ export default function QuizApp() {
 
   if (!hydrated) return null;
 
-  const { stage, index, answers, form, profileId } = state;
+  const { stage, index, answers, form } = state;
   const t = ui[lang];
 
   return (
@@ -726,8 +630,8 @@ export default function QuizApp() {
               submitting={submitting}
             />
           )}
-          {stage === 'result' && profileId && (
-            <ResultScreen profileId={profileId} answers={answers} form={form} onRestart={restart} />
+          {stage === 'result' && (
+            <ConfirmationScreen email={form.email ?? ''} prenom={form.prenom} onRestart={restart} />
           )}
         </main>
         <footer className="app-footer">

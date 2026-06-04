@@ -74,37 +74,16 @@ export const ui = {
       placeholderEmail: "vous@exemple.com",
       placeholderPhone: "+237 6XX XX XX XX",
     },
-    result: {
-      eyebrow: "VOTRE PROFIL PATRIMONIAL",
-      badgeProfile: "Profil défini",
-      badgeReco: "Recommandations sur-mesure",
-      badgeSentTo: "Envoyé à",
-      summaryLabel: "Votre situation en résumé",
-      summary: (p: {
-        pro: string;
-        geo: string;
-        horizon: string;
-        capital: string;
-        objectif: string;
-        risque: string;
-      }) =>
-        `D'après vos réponses : vous êtes ${p.pro}, basé(e) ${p.geo}, avec un horizon de ${p.horizon}, un capital mobilisable de ${p.capital}, et une priorité sur ${p.objectif}. Votre tolérance au risque est ${p.risque}.`,
-      recoLabel: "Ce que nous vous recommandons d'explorer",
-      recoTitle: "Vos classes d'actifs prioritaires",
-      riskLabel: "Risque",
-      horizonLabel: "Horizon",
-      ticketLabel: "Ticket",
-      trustLabel: "Pourquoi nous",
-      trustTitle: "Pourquoi nous faire confiance pour vous accompagner ?",
-      trustP1:
-        "Umdeny Capital est une structure d'accompagnement patrimonial et d'investissement basée à Yaoundé, active au Cameroun et auprès de la diaspora africaine. Nous travaillons avec des investisseurs particuliers et des entrepreneurs pour structurer, diversifier et faire fructifier leur patrimoine — avec rigueur, transparence et une connaissance terrain du marché africain.",
-      trustP2: "Chaque client est accompagné individuellement.",
-      trustEmphasis:
-        "Nous ne vendons pas des produits — nous construisons des stratégies.",
-      defaultCta: "Prendre un appel avec notre équipe",
-      defaultCtaShort:
-        "Appel de 30 minutes · Gratuit · Sans engagement · Disponible en semaine",
-      bookBtn: "Réserver mon créneau",
+    confirmation: {
+      eyebrow: "ANALYSE ENVOYÉE",
+      title: "Vérifiez votre boîte mail.",
+      titleEm: "Votre profil patrimonial est en route.",
+      sentTo: "Envoyé à",
+      body: "Nous venons d'envoyer votre analyse patrimoniale personnalisée à l'adresse indiquée. Votre profil, vos recommandations et les prochaines étapes s'y trouvent.",
+      spam: "Si vous ne le recevez pas dans les 5 prochaines minutes, pensez à vérifier vos spams.",
+      ctaTitle: "Prendre un appel avec notre équipe",
+      ctaSub: "Appel de 30 minutes · Gratuit · Sans engagement · Disponible en semaine",
+      ctaBtn: "Réserver mon créneau",
       restart: "← Refaire le quiz depuis le début",
     },
     footer: {
@@ -181,36 +160,16 @@ export const ui = {
       placeholderEmail: "you@example.com",
       placeholderPhone: "+237 6XX XX XX XX",
     },
-    result: {
-      eyebrow: "YOUR WEALTH PROFILE",
-      badgeProfile: "Profile defined",
-      badgeReco: "Tailored recommendations",
-      badgeSentTo: "Sent to",
-      summaryLabel: "Your situation at a glance",
-      summary: (p: {
-        pro: string;
-        geo: string;
-        horizon: string;
-        capital: string;
-        objectif: string;
-        risque: string;
-      }) =>
-        `Based on your answers: you are ${p.pro}, based in ${p.geo}, with a ${p.horizon} timeline, ${p.capital} in investable capital, and a priority on ${p.objectif}. Your risk tolerance is ${p.risque}.`,
-      recoLabel: "What we recommend you explore",
-      recoTitle: "Your priority asset classes",
-      riskLabel: "Risk",
-      horizonLabel: "Timeline",
-      ticketLabel: "Min. ticket",
-      trustLabel: "Why us",
-      trustTitle: "Why trust us to guide you?",
-      trustP1:
-        "Umdeny Capital is a wealth management and investment advisory firm based in Yaoundé, active in Cameroon and with the African diaspora. We work with individual investors and entrepreneurs to structure, diversify and grow their wealth — with rigour, transparency and first-hand knowledge of the African market.",
-      trustP2: "Each client is supported individually.",
-      trustEmphasis: "We don't sell products — we build strategies.",
-      defaultCta: "Book a call with our team",
-      defaultCtaShort:
-        "30-minute call · Free · No commitment · Available weekdays",
-      bookBtn: "Book my slot",
+    confirmation: {
+      eyebrow: "ANALYSIS SENT",
+      title: "Check your inbox.",
+      titleEm: "Your wealth profile is on its way.",
+      sentTo: "Sent to",
+      body: "We've just sent your personalised wealth analysis to the address you provided. Your profile, recommendations and next steps are all in there.",
+      spam: "If you don't receive it within the next 5 minutes, please check your spam folder.",
+      ctaTitle: "Book a call with our team",
+      ctaSub: "30-minute call · Free · No commitment · Available weekdays",
+      ctaBtn: "Book my slot",
       restart: "← Retake the quiz from the start",
     },
     footer: {

@@ -437,6 +437,7 @@ a:hover { text-decoration: underline; }
 
 .result-desc { padding-top: 64px; padding-bottom: 32px; }
 .result-desc p { font-size: 19px; line-height: 1.65; color: var(--ink-2); text-wrap: pretty; }
+.result-desc p.muted { opacity: 0.6; margin-top: 1rem; }
 
 .result-summary-section { padding-top: 32px; padding-bottom: 32px; }
 .result-summary-section .result-section-inner {
