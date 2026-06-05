@@ -41,6 +41,7 @@ export default function RootLayout({
       className={`${poppins.variable} ${robotoCondensed.variable} ${fraunces.variable}`}
     >
       <body>
+        <Analytics />
         {children}
         <CookieBanner />
       </body>
