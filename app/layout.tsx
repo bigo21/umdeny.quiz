@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
 import { Poppins, Roboto_Condensed, Fraunces } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "@/app/components/CookieBanner";
